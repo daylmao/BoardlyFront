@@ -5,6 +5,7 @@ import { HeroComponent } from '../../components/hero/hero.component';
 import { NavComponent } from '../../components/nav/nav.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { CtaComponent } from '../../components/cta/cta.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,7 @@ import { CtaComponent } from '../../components/cta/cta.component';
     FooterComponent,
     CtaComponent,
   ],
+
   templateUrl: './home.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

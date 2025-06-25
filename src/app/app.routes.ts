@@ -9,7 +9,12 @@ export const routes: Routes = [
 
   {
     path: 'ceo-dashboard',
-    loadChildren: () => import('./Ceo-dashboard/ceo.routes'),
+    loadChildren: () => import('./ceo-dashboard/ceo.routes'),
+  },
+
+  {
+    path: 'employee-dashboard',
+    loadChildren: () => import('./employee-dashboard/employee.routes'),
   },
 
   {

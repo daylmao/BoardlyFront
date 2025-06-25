@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CeoNavComponent } from '../../components/ceo-nav/ceo-nav.component';
+import { NavComponent } from '../../../shared/components/nav/nav.component';
 import { CeoStatsComponent } from '../../components/ceo-stats/ceo-stats.component';
 import { CompaniesComponent } from '../../components/Companies/Companies.component';
 import { CeoSidebarComponent } from '../../components/ceo-sidebar/ceo-sidebar.component';
@@ -8,11 +8,11 @@ import { CeoProjectsComponent } from '../../components/ceo-projects/ceo-projects
 @Component({
   selector: 'app-dashboard',
   imports: [
-    CeoNavComponent,
     CeoStatsComponent,
     CompaniesComponent,
     CeoSidebarComponent,
     CeoProjectsComponent,
+    NavComponent,
   ],
   templateUrl: './dashboard.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

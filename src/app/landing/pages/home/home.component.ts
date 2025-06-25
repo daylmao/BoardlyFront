@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { HowItWorksComponent } from '../../components/how-it-works/how-it-works.component';
 import { FeaturesComponent } from '../../components/features/features.component';
 import { HeroComponent } from '../../components/hero/hero.component';
-import { NavComponent } from '../../components/nav/nav.component';
+import { NavComponent } from '../../components/landing-nav/landing-nav.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { CtaComponent } from '../../components/cta/cta.component';
 import { RouterLink } from '@angular/router';

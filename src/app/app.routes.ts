@@ -8,6 +8,11 @@ export const routes: Routes = [
   },
 
   {
+    path: 'ceo-dashboard',
+    loadChildren: () => import('./Ceo-dashboard/ceo.routes'),
+  },
+
+  {
     path: '',
     component: HomeComponent,
   },

@@ -54,9 +54,13 @@ export const authRoutes: Routes = [
 
       {
         path: '**',
-        redirectTo: 'register',
+        redirectTo: 'login',
       },
     ],
+  },
+  {
+    path: '**',
+    redirectTo: 'login',
   },
 ];
 

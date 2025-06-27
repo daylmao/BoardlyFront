@@ -16,11 +16,11 @@ export class AuthService {
   private _user = signal<User | null>(null);
 
   readonly user = computed(() => this._user());
-  readonly isAuthenticated = computed(() => this._user() !== null);
+  readonly isAuthenticated = computed(() => !!this._user());
 
-  hasRole = (role: UserRole): boolean => {
+  hasRole(role: UserRole): boolean {
     return this._user()?.roles.includes(role) ?? false;
-  };
+  }
 
   login(email: string, password: string): Observable<boolean> {
     return this.http
@@ -29,8 +29,8 @@ export class AuthService {
         password,
       })
       .pipe(
-        map((resp) => this.handleAuthSuccess(resp)),
-        catchError(() => of(this.handleAuthError()))
+        map((resp) => this.handleAuthResponse(resp)),
+        catchError(() => of(this.clearAuth()))
       );
   }
 
@@ -65,22 +65,20 @@ export class AuthService {
     return this.loadUserFromToken();
   }
 
-  private handleAuthSuccess(resp: AuthResponse): boolean {
-    if (!resp.isSuccess || !resp.data?.jwtToken) {
-      return this.handleAuthError();
-    }
+  private handleAuthResponse(resp: AuthResponse): boolean {
+    if (!resp.isSuccess || !resp.data?.jwtToken) return this.clearAuth();
 
     this.tokenService.set(resp.data.jwtToken);
     this.loadUserFromToken();
     return true;
   }
 
-  private handleAuthError(): boolean {
+  private clearAuth(): boolean {
     this.logout();
     return false;
   }
 
-  loadUserFromToken(): boolean {
+  private loadUserFromToken(): boolean {
     const payload = this.tokenService.payload();
     if (!payload) return false;
 
@@ -89,7 +87,6 @@ export class AuthService {
       email: payload.email,
       roles: payload.roles,
     });
-
     return true;
   }
 }

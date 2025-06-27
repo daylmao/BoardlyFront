@@ -3,13 +3,10 @@ import { Injectable, signal, computed } from '@angular/core';
 @Injectable({ providedIn: 'root' })
 export class TokenService {
   private _token = signal<string | null>(localStorage.getItem('token'));
+  private _payload = signal<any | null>(this.decodeToken(this._token()));
 
-  private _payload = signal<any | null>(
-    this.decodeToken(localStorage.getItem('token'))
-  );
-  payload = computed(() => this._payload());
-
-  token = computed(() => this._token());
+  readonly token = computed(() => this._token());
+  readonly payload = computed(() => this._payload());
 
   set(token: string) {
     this._token.set(token);
@@ -18,24 +15,21 @@ export class TokenService {
   }
 
   get(): string | null {
-    const t = this._token();
-    return t;
+    return this._token();
   }
 
   clear() {
     this._token.set(null);
     this._payload.set(null);
+    localStorage.removeItem('token');
   }
 
   private decodeToken(token: string | null): any | null {
     if (!token) return null;
-
     try {
       const base64 = token.split('.')[1];
-      const json = atob(base64);
-      const payload = JSON.parse(json);
-      return payload;
-    } catch (err) {
+      return JSON.parse(atob(base64));
+    } catch {
       return null;
     }
   }

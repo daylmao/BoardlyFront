@@ -20,9 +20,7 @@ export function tokenRefreshInterceptor(
     tap((event) => {
       if (event instanceof HttpResponse) {
         const body = event.body as AuthResponse;
-        if (body?.data?.jwtToken) {
-          authService.updateToken(body.data.jwtToken);
-        }
+        if (body?.data?.jwtToken) authService.updateToken(body.data.jwtToken);
       }
     }),
     catchError((error: HttpErrorResponse) => {

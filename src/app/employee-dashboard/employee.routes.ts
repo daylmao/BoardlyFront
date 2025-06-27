@@ -11,7 +11,16 @@ export const employeeRoutes: Routes = [
         path: '',
         loadComponent: () => import('./pages/dashboard/dashboard.component'),
       },
+      {
+        path: '**',
+        redirectTo: '',
+      },
     ],
+  },
+
+  {
+    path: '**',
+    redirectTo: '',
   },
 ];
 

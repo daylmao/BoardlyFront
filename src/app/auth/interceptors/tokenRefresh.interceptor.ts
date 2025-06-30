@@ -10,7 +10,7 @@ import { Observable, tap, catchError, throwError } from 'rxjs';
 import { AuthService } from '../services/AuthService.service';
 import { AuthResponse } from '../interfaces/AuthResponse.interface';
 
-export function tokenRefreshInterceptor(
+export function TokenRefreshInterceptor(
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> {

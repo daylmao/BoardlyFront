@@ -9,7 +9,8 @@ import {
 } from '@angular/common/http';
 
 import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
-import { tokenRefreshInterceptor } from './auth/interceptors/tokenRefresh.interceptor';
+import { TokenRefreshInterceptor } from './auth/interceptors/tokenRefresh.interceptor';
+import { ErrorInterceptor } from './auth/interceptors/error.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,7 +18,11 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(
       withFetch(),
-      withInterceptors([AuthInterceptor, tokenRefreshInterceptor])
+      withInterceptors([
+        AuthInterceptor,
+        TokenRefreshInterceptor,
+        ErrorInterceptor,
+      ])
     ),
   ],
 };

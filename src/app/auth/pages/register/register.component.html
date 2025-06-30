@@ -41,38 +41,79 @@
     </div>
 
     <!-- Registration Form -->
-    <form class="space-y-6" action="verify-email.html" method="get">
-      <!-- Campos del formulario... -->
-      <div class="space-y-2">
+    <form class="space-y-6" [formGroup]="registerForm">
+      <!-- Nombre -->
+      <div class="space-y-2 relative">
         <label for="nombre" class="block text-sm font-medium text-surface-300">
-          Nombre Completo *
+          Nombre *
         </label>
         <input id="nombre" name="nombre" type="text" required
           class="w-full px-4 py-3 bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 shadow-xl shadow-black/20 ring-1 ring-white/5"
-          placeholder="Tu nombre completo">
+          placeholder="Ej: Juan" formControlName="name" />
+        <p class="text-xs text-surface-500">Solo letras y apóstrofes (')</p>
+
+        @if (validators.isValidField(registerForm, "name")) {
+        <div
+          class="absolute -top-2 right-3 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
+          <div class="relative flex h-2.5 w-2.5">
+            <div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/70 opacity-80"></div>
+            <div class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary"></div>
+          </div>
+          <span class="text-[11px] font-medium text-accent">
+            {{ validators.getFieldError(registerForm, "name") }}
+          </span>
+        </div>
+        }
       </div>
 
-      <div class="space-y-2">
-        <label for="nombreUsuario" class="block text-sm font-medium text-surface-300">
-          Nombre de Usuario
+      <!-- Apellido -->
+      <div class="space-y-2 relative">
+        <label for="lastName" class="block text-sm font-medium text-surface-300">
+          Apellido *
         </label>
-        <input id="nombreUsuario" name="nombreUsuario" type="text"
+        <input id="lastName" name="lastName" type="text" required
           class="w-full px-4 py-3 bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 shadow-xl shadow-black/20 ring-1 ring-white/5"
-          placeholder="nombre.usuario">
-        <p class="text-xs text-surface-500">Este será tu identificador único en la plataforma</p>
+          placeholder="Ej: Pérez" formControlName="lastName" />
+        <p class="text-xs text-surface-500">Solo letras y apóstrofes (')</p>
+
+        @if (validators.isValidField(registerForm, "lastName")) {
+        <div
+          class="absolute -top-2 right-3 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
+          <div class="relative flex h-2.5 w-2.5">
+            <div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/70 opacity-80"></div>
+            <div class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary"></div>
+          </div>
+          <span class="text-[11px] font-medium text-accent">
+            {{ validators.getFieldError(registerForm, "lastName") }}
+          </span>
+        </div>
+        }
       </div>
 
-      <div class="space-y-2">
-        <label for="correo" class="block text-sm font-medium text-surface-300">
-          Correo Electrónico *
+      <div class="space-y-2 relative">
+        <label for="username" class="block text-sm font-medium text-surface-300">
+          Nombre de Usuario *
         </label>
-        <input id="correo" name="correo" type="email" autocomplete="email" required
+        <input id="username" name="username" type="text" required
           class="w-full px-4 py-3 bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 shadow-xl shadow-black/20 ring-1 ring-white/5"
-          placeholder="tu@email.com">
-        <p class="text-xs text-surface-500">Utiliza un correo electrónico válido</p>
+          placeholder="Ej: juan_perez23" formControlName="username" />
+        <p class="text-xs text-surface-500">Empieza con letra, puede contener números</p>
+
+        @if (validators.isValidField(registerForm, "username")) {
+        <div
+          class="absolute -top-2 right-3 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
+          <div class="relative flex h-2.5 w-2.5">
+            <div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/70 opacity-80"></div>
+            <div class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary"></div>
+          </div>
+          <span class="text-[11px] font-medium text-accent">
+            {{ validators.getFieldError(registerForm, "username") }}
+          </span>
+        </div>
+        }
       </div>
 
-      <div class="space-y-2">
+      <div class="space-y-2 relative">
         <label for="fotoPerfil" class="block text-sm font-medium text-surface-300">
           Foto de Perfil
         </label>
@@ -94,51 +135,119 @@
             </label>
           </div>
         </div>
-        <p class="text-xs text-surface-500">Formatos aceptados: JPG, PNG (Max. 2MB)</p>
+        <p class="text-xs text-surface-500">Formatos aceptados: JPG, PNG (Max. 5MB)</p>
       </div>
 
-      <div class="space-y-2">
-        <label for="contraseña" class="block text-sm font-medium text-surface-300">
+      <div class="space-y-2 relative">
+        <label for="correo" class="block text-sm font-medium text-surface-300">
+          Correo Electrónico *
+        </label>
+        <input id="email" name="email" type="email" autocomplete="email" required
+          class="w-full px-4 py-3 bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 shadow-xl shadow-black/20 ring-1 ring-white/5"
+          placeholder="Ej: juan@email.com" formControlName="email" />
+
+        @if (validators.isValidField(registerForm, "email")) {
+        <div
+          class="absolute -top-2 right-3 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
+          <div class="relative flex h-2.5 w-2.5">
+            <div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/70 opacity-80"></div>
+            <div class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary"></div>
+          </div>
+          <span class="text-[11px] font-medium text-accent">
+            {{ validators.getFieldError(registerForm, "email") }}
+          </span>
+        </div>
+        }
+      </div>
+
+
+      <!-- Contraseña -->
+      <div class="space-y-2 relative">
+        <label for="password" class="block text-sm font-medium text-surface-300">
           Contraseña *
         </label>
-        <input id="contraseña" name="contraseña" type="password" autocomplete="new-password" required
-          class="w-full px-4 py-3 bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 shadow-xl shadow-black/20 ring-1 ring-white/5"
-          placeholder="••••••••">
-        <div class="mt-3 space-y-2">
-          <p class="text-xs text-surface-400">La contraseña debe contener:</p>
-          <div class="grid grid-cols-2 gap-2 text-xs">
-            <div class="flex items-center space-x-2">
-              <div class="w-2 h-2 rounded-full bg-surface-500"></div>
-              <span class="text-surface-400">8+ caracteres</span>
-            </div>
-            <div class="flex items-center space-x-2">
-              <div class="w-2 h-2 rounded-full bg-surface-500"></div>
-              <span class="text-surface-400">Mayúscula</span>
-            </div>
-            <div class="flex items-center space-x-2">
-              <div class="w-2 h-2 rounded-full bg-surface-500"></div>
-              <span class="text-surface-400">Minúscula</span>
-            </div>
-            <div class="flex items-center space-x-2">
-              <div class="w-2 h-2 rounded-full bg-surface-500"></div>
-              <span class="text-surface-400">Número</span>
-            </div>
-          </div>
+        <div class="relative">
+          <input id="password" [type]="showPassword ? 'text' : 'password'" autocomplete="new-password" required
+            class="w-full px-4 py-3 bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 shadow-xl shadow-black/20 ring-1 ring-white/5 pr-10"
+            placeholder="••••••••" formControlName="password"
+            (input)="registerForm.get('confirmPassword')?.updateValueAndValidity()" />
+          <button type="button" (click)="togglePasswordVisibility()"
+            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-surface-400 hover:text-surface-200 focus:outline-none"
+            [attr.aria-label]="showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+              @if (showPassword) {
+              <path
+                d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+              </path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+              }
+            </svg>
+          </button>
         </div>
+        <p class="text-xs text-surface-500">Mínimo 8 caracteres, con mayúscula y número</p>
+
+        @if (validators.isValidField(registerForm, "password")) {
+        <div
+          class="absolute -top-2 right-3 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
+          <div class="relative flex h-2.5 w-2.5">
+            <div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/70 opacity-80"></div>
+            <div class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary"></div>
+          </div>
+          <span class="text-[11px] font-medium text-accent">
+            {{ validators.getFieldError(registerForm, "password") }}
+          </span>
+        </div>
+        }
       </div>
 
-      <div class="space-y-2">
-        <label for="confirmarContraseña" class="block text-sm font-medium text-surface-300">
+      <!-- Confirmar Contraseña -->
+      <div class="space-y-2 relative">
+        <label for="confirmPassword" class="block text-sm font-medium text-surface-300">
           Confirmar Contraseña *
         </label>
-        <input id="confirmarContraseña" name="confirmarContraseña" type="password" autocomplete="new-password" required
-          class="w-full px-4 py-3 bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 shadow-xl shadow-black/20 ring-1 ring-white/5"
-          placeholder="••••••••">
+        <div class="relative">
+          <input id="confirmPassword" [type]="showConfirmPassword ? 'text' : 'password'" autocomplete="new-password"
+            required
+            class="w-full px-4 py-3 bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 shadow-xl shadow-black/20 ring-1 ring-white/5 pr-10"
+            placeholder="••••••••" formControlName="confirmPassword" />
+          <button type="button" (click)="toggleConfirmPasswordVisibility()"
+            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-surface-400 hover:text-surface-200 focus:outline-none"
+            [attr.aria-label]="showConfirmPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+              @if (showConfirmPassword) {
+              <path
+                d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+              </path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+              }
+            </svg>
+          </button>
+        </div>
+        <p class="text-xs text-surface-500">Vuelve a escribir tu contraseña</p>
+
+        @if (validators.isValidField(registerForm, "confirmPassword")) {
+        <div
+          class="absolute -top-2 right-3 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
+          <div class="relative flex h-2.5 w-2.5">
+            <div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/70 opacity-80"></div>
+            <div class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary"></div>
+          </div>
+          <span class="text-[11px] font-medium text-accent">
+            {{ validators.getFieldError(registerForm, "confirmPassword") }}
+          </span>
+        </div>
+        }
       </div>
 
       <!-- Submit Button -->
       <button type="submit"
-        class="w-full bg-gradient-to-r from-primary via-accent to-secondary text-white py-3 px-4 rounded-xl font-medium hover:shadow-xl hover:shadow-primary/25 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface-950 transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-0.5">
+        class="cursor-pointer w-full bg-gradient-to-r from-primary via-accent to-secondary text-white py-3 px-4 rounded-xl font-medium hover:shadow-xl hover:shadow-primary/25 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface-950 transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-0.5">
         Crear Cuenta
       </button>
     </form>

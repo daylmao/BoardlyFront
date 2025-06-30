@@ -1,11 +1,12 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { User } from '../interfaces/User.interface';
 import { AuthResponse } from '../interfaces/AuthResponse.interface';
 import { TokenService } from './TokenService.service';
 import { UserRole } from '../../shared/enums/UserRole.enum';
+import { UserRequest } from '../interfaces/UserRequest.interface';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -28,27 +29,13 @@ export class AuthService {
         email,
         password,
       })
-      .pipe(
-        map((resp) => this.handleAuthResponse(resp)),
-        catchError(() => of(this.clearAuth()))
-      );
+      .pipe(map((resp) => this.handleAuthResponse(resp)));
   }
 
-  register(
-    fullName: string,
-    email: string,
-    password: string
-  ): Observable<boolean> {
-    return this.http
-      .post<AuthResponse>(`${this.baseUrl}/auth/register`, {
-        fullName,
-        email,
-        password,
-      })
-      .pipe(
-        map((resp) => resp.isSuccess),
-        catchError(() => of(false))
-      );
+  register(request: UserRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.baseUrl}/auth/register`, {
+      request,
+    });
   }
 
   logout(): void {

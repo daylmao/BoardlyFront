@@ -10,7 +10,7 @@ import { Observable, tap, catchError, throwError } from 'rxjs';
 import { AuthService } from '../services/AuthService.service';
 import { AuthResponse } from '../interfaces/AuthResponse.interface';
 
-export function tokenRefreshInterceptor(
+export function TokenRefreshInterceptor(
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> {
@@ -20,9 +20,7 @@ export function tokenRefreshInterceptor(
     tap((event) => {
       if (event instanceof HttpResponse) {
         const body = event.body as AuthResponse;
-        if (body?.data?.jwtToken) {
-          authService.updateToken(body.data.jwtToken);
-        }
+        if (body?.data?.jwtToken) authService.updateToken(body.data.jwtToken);
       }
     }),
     catchError((error: HttpErrorResponse) => {

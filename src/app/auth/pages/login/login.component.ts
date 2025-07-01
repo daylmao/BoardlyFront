@@ -25,18 +25,8 @@ export default class LoginComponent {
   private router = inject(Router);
 
   loginForm: FormGroup = this.fb.group({
-    email: [
-      '',
-      [Validators.pattern(this.validators.emailPattern), Validators.required],
-    ],
-    password: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(6),
-        this.validators.passwordComplexity,
-      ],
-    ],
+    email: ['', [Validators.required]],
+    password: ['', [Validators.required]],
   });
 
   OnSubmit() {
@@ -47,8 +37,6 @@ export default class LoginComponent {
     const { email = '', password = '' } = this.loginForm.value;
 
     this.authService.login(email, password).subscribe((isAuthenticated) => {
-      console.log('isStudent:', this.authService.hasRole);
-
       if (isAuthenticated) {
         if (this.authService.hasRole(UserRole.Student)) {
           this.router.navigateByUrl('/ceo-dashboard');

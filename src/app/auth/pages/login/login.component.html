@@ -23,9 +23,9 @@
         </label>
         <input id="email" name="email" type="email" autocomplete="email" required
           class="w-full px-4 py-3 bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 shadow-xl shadow-black/20 ring-1 ring-white/5"
-          placeholder="tu@email.com" formControlName="email" />
+          placeholder="tu@email.com" formControlName="Correo" />
 
-        @if (validators.isValidField(loginForm, "email")) {
+        @if (validators.isValidField(loginForm, "Correo")) {
         <div
           class="absolute -top-2 right-3 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
           <div class="relative flex h-2.5 w-2.5">
@@ -33,7 +33,7 @@
             <div class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary"></div>
           </div>
           <span class="text-[11px] font-medium text-accent">
-            {{ validators.getFieldError(loginForm, "email") }}
+            {{ validators.getFieldError(loginForm, "Correo") }}
           </span>
         </div>
         }
@@ -46,9 +46,9 @@
         </label>
         <input id="password" name="password" type="password" autocomplete="current-password" required
           class="w-full px-4 py-3 bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 shadow-xl shadow-black/20 ring-1 ring-white/5"
-          placeholder="••••••••" formControlName="password">
+          placeholder="••••••••" formControlName="Contrasena">
 
-        @if (validators.isValidField(loginForm, "password")) {
+        @if (validators.isValidField(loginForm, "Contrasena")) {
         <div
           class="absolute -top-2 right-3 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
           <div class="relative flex h-2.5 w-2.5">
@@ -56,7 +56,7 @@
             <div class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary"></div>
           </div>
           <span class="text-[11px] font-medium text-accent">
-            {{ validators.getFieldError(loginForm, "password") }}
+            {{ validators.getFieldError(loginForm, "Contrasena") }}
           </span>
         </div>
         }

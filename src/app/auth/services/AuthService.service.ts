@@ -23,11 +23,11 @@ export class AuthService {
     return this._user()?.roles.includes(role) ?? false;
   }
 
-  login(email: string, password: string): Observable<boolean> {
+  login(Correo: string, Contrasena: string): Observable<boolean> {
     return this.http
-      .post<AuthResponse>(`${this.baseUrl}/account/authenticate`, {
-        email,
-        password,
+      .post<AuthResponse>(`${this.baseUrl}/auth`, {
+        Correo,
+        Contrasena,
       })
       .pipe(map((resp) => this.handleAuthResponse(resp)));
   }
@@ -53,9 +53,10 @@ export class AuthService {
   }
 
   private handleAuthResponse(resp: AuthResponse): boolean {
-    if (!resp.isSuccess || !resp.data?.jwtToken) return this.clearAuth();
+    if (!resp.jwtToken) return this.clearAuth();
 
-    this.tokenService.set(resp.data.jwtToken);
+    this.tokenService.set(resp.jwtToken);
+    console.log(resp.jwtToken);
     this.loadUserFromToken();
     return true;
   }

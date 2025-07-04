@@ -12,7 +12,7 @@ export class RoleMatchGuard implements CanMatch {
 
   canMatch(route: Route, segments: UrlSegment[]): boolean {
     const hasAccess =
-      this.authService.hasRole(UserRole.Student) ||
+      this.authService.hasRole(UserRole.Ceo) ||
       this.authService.hasRole(UserRole.Empleado);
 
     if (!hasAccess) {

@@ -1,5 +1,5 @@
 interface JwtPayload {
   sub: string;
-  roles: string[];
+  roles: string;
   exp: number;
 }

@@ -13,9 +13,9 @@ export const NotAuthenticatedGuard: CanMatchFn = (
   const isAuthenticated = authService.isAuthenticated();
 
   if (isAuthenticated) {
-    if (authService.hasRole(UserRole.Student)) {
+    if (authService.hasRole(UserRole.Ceo)) {
       router.navigateByUrl('/ceo-dashboard');
-    } else if (authService.hasRole(UserRole.Student)) {
+    } else if (authService.hasRole(UserRole.Empleado)) {
       router.navigateByUrl('/employee-dashboard');
     }
 

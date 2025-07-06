@@ -14,7 +14,7 @@ export function ErrorInterceptor(
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
       const mensaje =
-        error.error?.errorMessage || error.message || `Error ${error.status}`;
+        error.error?.title || error.message || `Error ${error.status}`;
 
       toast.error(mensaje);
 

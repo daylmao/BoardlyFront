@@ -25,8 +25,8 @@ export default class LoginComponent {
   private router = inject(Router);
 
   loginForm: FormGroup = this.fb.group({
-    email: ['', [Validators.required]],
-    password: ['', [Validators.required]],
+    Correo: ['', [Validators.required]],
+    Contrasena: ['', [Validators.required]],
   });
 
   OnSubmit() {
@@ -34,11 +34,12 @@ export default class LoginComponent {
       this.loginForm.markAllAsTouched();
     }
 
-    const { email = '', password = '' } = this.loginForm.value;
+    const { Correo = '', Contrasena = '' } = this.loginForm.value;
+    console.log(this.loginForm.value);
 
-    this.authService.login(email, password).subscribe((isAuthenticated) => {
+    this.authService.login(Correo, Contrasena).subscribe((isAuthenticated) => {
       if (isAuthenticated) {
-        if (this.authService.hasRole(UserRole.Student)) {
+        if (this.authService.hasRole(UserRole.Ceo)) {
           this.router.navigateByUrl('/ceo-dashboard');
         } else {
           this.router.navigateByUrl('/');

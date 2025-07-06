@@ -7,6 +7,7 @@ import { AuthResponse } from '../interfaces/AuthResponse.interface';
 import { TokenService } from './TokenService.service';
 import { UserRole } from '../../shared/enums/UserRole.enum';
 import { UserRequest } from '../interfaces/UserRequest.interface';
+import { RolResponse } from '../interfaces/RolResponse.interface';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -19,23 +20,47 @@ export class AuthService {
   readonly user = computed(() => this._user());
   readonly isAuthenticated = computed(() => !!this._user());
 
+  // hasRole(role: UserRole): boolean {
+  //   return this._user()?.roles.includes(role) ?? false;
+  // }
+
   hasRole(role: UserRole): boolean {
-    return this._user()?.roles.includes(role) ?? false;
+    const user = this._user();
+    if (!user || !user.roles) return false;
+
+    return user.roles === role;
   }
 
-  login(email: string, password: string): Observable<boolean> {
+  login(Correo: string, Contrasena: string): Observable<boolean> {
     return this.http
-      .post<AuthResponse>(`${this.baseUrl}/account/authenticate`, {
-        email,
-        password,
+      .post<AuthResponse>(`${this.baseUrl}/auth`, {
+        Correo,
+        Contrasena,
       })
       .pipe(map((resp) => this.handleAuthResponse(resp)));
   }
 
-  register(request: UserRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.baseUrl}/auth/register`, {
-      request,
-    });
+  register(data: FormData): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.baseUrl}/users`, data);
+  }
+  confirmCeoAccount(userId: string, codigo: string): Observable<string> {
+    const options = {
+      params: { userId },
+      responseType: 'text' as const,
+    };
+
+    return this.http.post(
+      `${this.baseUrl}/users/confirm-account`,
+      { codigo },
+      options
+    );
+  }
+
+  giveCeoRol(userId: string): Observable<RolResponse> {
+    return this.http.post<RolResponse>(
+      `${this.baseUrl}/user-type/ceo/${userId}`,
+      {}
+    );
   }
 
   logout(): void {
@@ -53,9 +78,10 @@ export class AuthService {
   }
 
   private handleAuthResponse(resp: AuthResponse): boolean {
-    if (!resp.isSuccess || !resp.data?.jwtToken) return this.clearAuth();
+    if (!resp.jwtToken) return this.clearAuth();
 
-    this.tokenService.set(resp.data.jwtToken);
+    this.tokenService.set(resp.jwtToken);
+    console.log(resp.jwtToken);
     this.loadUserFromToken();
     return true;
   }

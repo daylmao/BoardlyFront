@@ -14,7 +14,7 @@
       </div>
 
       <div class="flex items-center space-x-4">
-        <a href="reports.html"
+        <a routerLink="/reports"
           class="group p-2.5 text-surface-400 hover:text-white transition-all duration-300 rounded-xl hover:bg-surface-800/50 hover:scale-105"
           title="Generar Reportes">
           <svg class="w-5 h-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor"
@@ -24,10 +24,12 @@
             </path>
           </svg>
         </a>
-        <div
-          class="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white text-sm font-bold hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:scale-105 ring-1 ring-white/20">
+
+        <!-- Botón que redirige al perfil -->
+        <a routerLink="/perfil"
+          class="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white text-sm font-bold hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:scale-105 ring-1 ring-white/20 cursor-pointer">
           JD
-        </div>
+        </a>
       </div>
     </div>
   </div>

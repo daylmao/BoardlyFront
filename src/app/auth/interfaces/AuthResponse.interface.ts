@@ -1,16 +1,12 @@
 export interface AuthResponse {
   isSuccess: boolean;
-  data: {
-    id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    username: string;
-    roles: string[];
-    isVerified: boolean;
-    statusCodes: number;
-    jwtToken: string;
-    phoneNumber: string;
-  };
+  usuarioId: string;
+  nombre: string;
+  apellido: string;
+  nombreUsuario: string;
+  correo: string;
+  estado: string;
+  fotoPerfil: string;
+  jwtToken: string;
   errorMessage: string | null;
 }

@@ -1,0 +1,79 @@
+<body
+  class="bg-gradient-to-br from-surface-950 via-surface-900 to-surface-950 min-h-screen font-sans antialiased flex flex-col">
+
+
+  <main class="flex-grow flex items-center justify-center py-12">
+    <div class="w-full max-w-xl mx-auto px-4 sm:px-6">
+      <div
+        class="bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 rounded-2xl overflow-hidden shadow-2xl shadow-black/20 ring-1 ring-white/5 flex flex-col min-h-[400px]">
+        <!-- Modal Header -->
+        <div
+          class="bg-gradient-to-r from-danger/10 to-danger/5 px-8 py-6 border-b border-surface-800/50 flex justify-between items-center">
+          <div class="flex items-center space-x-4">
+            <div
+              class="w-12 h-12 bg-gradient-to-br from-danger/20 to-danger/10 rounded-xl flex items-center justify-center ring-1 ring-danger/20">
+              <svg class="w-6 h-6 text-danger" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                </path>
+              </svg>
+            </div>
+            <h2 class="text-2xl font-bold bg-gradient-to-r from-white to-surface-200 bg-clip-text text-transparent">
+              {{title()}}</h2>
+          </div>
+          <a href="task-detail.html"
+            class="group text-surface-400 hover:text-white p-2 rounded-xl hover:bg-surface-700/50 transition-all duration-300 hover:scale-105">
+            <svg class="w-6 h-6 transition-transform group-hover:rotate-90" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </a>
+        </div>
+
+        <!-- Modal Content -->
+        <div class="flex-grow p-8 flex flex-col">
+          <div class="text-center flex-grow flex flex-col items-center justify-center">
+            <div
+              class="mx-auto flex items-center justify-center h-20 w-20 rounded-2xl bg-gradient-to-br from-danger/20 to-danger/10 ring-1 ring-danger/20 mb-8">
+              <svg class="h-10 w-10 text-danger" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                </path>
+              </svg>
+            </div>
+
+            <div class="mb-8">
+              <h3 class="text-2xl font-bold text-white mb-3">¿Confirmar eliminación?</h3>
+
+              <p class="text-sm text-surface-500">Esta acción no se puede deshacer y eliminará todos los datos
+                asociados.</p>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+            <a routerLink="/"
+              class="group px-8 py-3 bg-surface-800/40 backdrop-blur-sm text-surface-300 border border-surface-700/50 rounded-xl font-medium hover:bg-surface-700/50 hover:text-white transition-all duration-300 text-center hover:scale-[1.02] ring-1 ring-white/5">
+              <span class="flex items-center justify-center space-x-2">
+                <svg class="w-4 h-4 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+                <span>Cancelar</span>
+              </span>
+            </a>
+            <button (click)="onDelete()"
+              class="group bg-gradient-to-r from-danger via-danger/90 to-danger/80 text-white px-8 py-3 rounded-xl font-semibold hover:shadow-xl hover:shadow-danger/25 transition-all duration-300 text-center flex items-center justify-center space-x-2 transform hover:scale-[1.02]">
+              <svg class="w-5 h-5 transition-transform group-hover:scale-110" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                </path>
+              </svg>
+              <span>Eliminar Definitivamente</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>

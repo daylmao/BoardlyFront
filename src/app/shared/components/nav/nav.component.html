@@ -2,14 +2,17 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4">
     <div class="flex items-center justify-between">
       <div class="flex items-center space-x-4">
-        <div
-          class="w-12 h-12 bg-gradient-to-br from-primary via-accent to-secondary rounded-2xl flex items-center justify-center shadow-lg shadow-primary/25 ring-1 ring-white/10">
-          <span class="text-white font-bold text-xl">B</span>
-        </div>
+        <a [routerLink]="['/']">
+          <div
+            class="w-12 h-12 bg-gradient-to-br from-primary via-accent to-secondary rounded-2xl flex items-center justify-center shadow-lg shadow-primary/25 ring-1 ring-white/10">
+            <span class="text-white font-bold text-xl">B</span>
+          </div>
+        </a>
         <div>
           <h1 class="text-2xl font-bold bg-gradient-to-r from-white to-surface-200 bg-clip-text text-transparent">
-            Boardly - CEO Dashboard</h1>
-          <p class="text-sm text-surface-400">Gestión completa de empresas y proyectos</p>
+            {{ title() }}
+          </h1>
+          <p class="text-sm text-surface-400">{{ description() }}</p>
         </div>
       </div>
 
@@ -25,10 +28,10 @@
           </svg>
         </a>
 
-        <!-- Botón que redirige al perfil -->
-        <a routerLink="/perfil"
-          class="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white text-sm font-bold hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:scale-105 ring-1 ring-white/20 cursor-pointer">
-          JD
+        <a [routerLink]="['profile', profileId()]">
+          <img [src]="imageProfile()"
+            class="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white text-sm font-bold hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:scale-105 ring-1 ring-white/20 cursor-pointer" />
+
         </a>
       </div>
     </div>

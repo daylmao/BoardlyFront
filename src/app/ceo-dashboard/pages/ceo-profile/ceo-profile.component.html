@@ -1,0 +1,8 @@
+@if (ceoResource.isLoading()) {
+<app-spinner [title]="'Cargando...'" />
+}
+
+@if (ceoResource.hasValue()) {
+
+<app-profile [userDetails]="ceoResource.value() " />
+}

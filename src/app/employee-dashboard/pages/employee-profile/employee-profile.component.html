@@ -1,0 +1,7 @@
+@if (employeeResource.isLoading()) {
+<app-spinner [title]="'Cargando...'" />
+}
+
+@if (employeeResource.hasValue()) {
+<app-profile [userDetails]="employeeResource.value()" />
+}

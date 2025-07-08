@@ -8,12 +8,21 @@ export const employeeRoutes: Routes = [
     component: EmployeeLayoutComponent,
     children: [
       {
-        path: '',
-        loadComponent: () => import('./pages/dashboard/dashboard.component'),
+        path: 'profile/:id',
+        loadComponent: () =>
+          import(
+            '../employee-dashboard/pages/employee-profile/employee-profile.component'
+          ),
       },
+
       {
         path: '**',
         redirectTo: '',
+      },
+
+      {
+        path: '',
+        loadComponent: () => import('./pages/dashboard/dashboard.component'),
       },
     ],
   },

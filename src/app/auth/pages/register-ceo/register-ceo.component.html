@@ -1,44 +1,5 @@
 <app-register (register)="onSubmit($event)"></app-register>
 
 @if (loading()) {
-<div class="fixed inset-0 bg-surface-950/80 backdrop-blur-sm z-50 flex items-center justify-center">
-  <div class="text-center space-y-6">
-    <!-- Contenedor del spinner con logo flotante -->
-    <div class="relative inline-flex items-center justify-center">
-      <!-- Spinner con gradiente sutil -->
-      <div class="animate-spin rounded-full h-20 w-20 border-t-4 border-b-4 border-surface-800" style="
-          border-left-color: rgba(99, 102, 241, 0.3);
-          border-right-color: rgba(99, 102, 241, 0.3);
-          animation-duration: 1.8s;
-        ">
-      </div>
-
-      <!-- Logo de la app con efecto flotante -->
-      <div class="absolute inset-0 flex items-center justify-center animate-float">
-        <div
-          class="w-12 h-12 bg-gradient-to-br from-primary via-accent to-secondary rounded-xl flex items-center justify-center shadow-lg shadow-primary/25 ring-1 ring-white/10">
-          <span class="text-white font-bold text-xl">B</span>
-        </div>
-      </div>
-
-      <!-- Efecto de partículas (opcional) -->
-      <div class="absolute -inset-2 rounded-full bg-primary/5 animate-pulse"></div>
-    </div>
-
-    <!-- Texto de carga con tipografía consistente -->
-    <div class="space-y-2">
-      <p class="text-lg font-medium bg-gradient-to-r from-white to-surface-300 bg-clip-text text-transparent">
-        Creando tu cuenta...
-      </p>
-      <p class="text-sm text-surface-400 animate-pulse">
-        Esto solo tomará un momento...
-      </p>
-    </div>
-
-    <!-- Barra de progreso sutil (opcional) -->
-    <div class="w-40 mx-auto h-0.5 bg-surface-800 overflow-hidden">
-      <div class="h-full bg-gradient-to-r from-primary to-accent animate-progress"></div>
-    </div>
-  </div>
-</div>
+<app-spinner [title]="'Creando su cuenta...'" />
 }

@@ -1,22 +1,27 @@
 import {
   HttpRequest,
   HttpHandlerFn,
-  HttpEvent,
   HttpErrorResponse,
 } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { toast } from 'ngx-sonner';
 
 export function ErrorInterceptor(
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
-): Observable<HttpEvent<unknown>> {
+) {
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
-      const mensaje =
-        error.error?.title || error.message || `Error ${error.status}`;
-
-      toast.error(mensaje);
+      if (Array.isArray(error.error.errors)) {
+        error.error.forEach((msg: string) => toast.error(msg));
+      } else {
+        const mensaje =
+          error.error?.descripcion ||
+          error.error?.message ||
+          'Un error inesperado ha ocurrido.';
+        toast.error(mensaje);
+      }
 
       return throwError(() => error);
     })

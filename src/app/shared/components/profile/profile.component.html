@@ -1,0 +1,218 @@
+<body class="bg-gradient-to-br from-surface-950 via-surface-900 to-surface-950 min-h-screen font-sans antialiased">
+  <app-nav [title]="'Boardly - Ceo Dashboard'" [description]="'no sabe tu'" [imageProfile]="''" [profileId]="id" />
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    <!-- Header añadido para mejor jerarquía -->
+    <div class="mb-8">
+      <h1 class="text-2xl sm:text-3xl font-bold text-white mb-2">Configuración de Perfil</h1>
+      <p class="text-surface-400">Administra tu información personal y configuración de cuenta</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Columna Principal -->
+      <div class="lg:col-span-2 space-y-8">
+        <!-- Tarjeta de Información Personal -->
+        <div
+          class="bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 rounded-2xl p-6 shadow-lg shadow-black/10 ring-1 ring-white/5">
+          <div class="flex items-center space-x-4 mb-6 pb-4 border-b border-surface-800/50">
+            <div
+              class="w-10 h-10 bg-gradient-to-br from-primary/20 to-primary/10 rounded-xl flex items-center justify-center ring-1 ring-primary/20">
+              <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold bg-gradient-to-r from-white to-surface-200 bg-clip-text text-transparent">
+              Información Personal</h3>
+          </div>
+
+          <form class="space-y-6">
+            <!-- Foto y Nombre de Usuario -->
+            <div class="flex flex-col sm:flex-row sm:items-center gap-6">
+              <!-- Contenedor de la foto -->
+              <div class="flex-shrink-0 relative group">
+                <input type="file" id="profile-upload" accept="image/*" class="hidden">
+                <label for="profile-upload" class="cursor-pointer block">
+                  <div class="relative">
+                    <img [src]="userDetails().fotoPerfil" alt="Foto de perfil"
+                      class="w-24 h-24 rounded-full object-cover border-2 border-surface-700/50 group-hover:border-primary/50 transition-all duration-300">
+                    <div
+                      class="absolute inset-0 bg-black/40 rounded-full opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
+                      <span class="text-white text-sm font-medium flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
+                          stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        Cambiar
+                      </span>
+                    </div>
+                  </div>
+                </label>
+              </div>
+
+              <!-- Información del usuario -->
+              <div>
+                <h2 class="text-2xl font-bold text-white">{{userDetails().nombre}} {{userDetails().apellido}}</h2>
+                <p class="text-surface-400">{{ '@' + userDetails().nombreUsuario }}</p>
+                <div class="mt-2 flex items-center text-sm text-surface-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                  <span>{{userDetails().correo}}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Campos de Información -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div class="space-y-2">
+                <label for="nombre" class="block text-sm font-medium text-surface-300">
+                  Nombre
+                </label>
+                <input id="nombre" type="text" [value]="userDetails().nombre" placeholder="Ingresa tu nombre"
+                  class="w-full px-4 py-2.5 bg-surface-800/50 border border-surface-700/50 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 placeholder-surface-500">
+              </div>
+
+              <div class="space-y-2">
+                <label for="apellido" class="block text-sm font-medium text-surface-300">
+                  Apellido
+                </label>
+                <input id="apellido" type="text" [value]="userDetails().apellido" placeholder="Ingresa tu apellido"
+                  class="w-full px-4 py-2.5 bg-surface-800/50 border border-surface-700/50 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 placeholder-surface-500">
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <label for="email" class="block text-sm font-medium text-surface-300">
+                Correo Electrónico
+              </label>
+              <input id="email" type="email" [value]="userDetails().correo" placeholder="Ingresa tu correo electrónico"
+                class="w-full px-4 py-2.5 bg-surface-800/50 border border-surface-700/50 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 placeholder-surface-500">
+            </div>
+
+            <div class="space-y-2">
+              <label for="username" class="block text-sm font-medium text-surface-300">
+                Nombre de Usuario
+              </label>
+              <input id="username" type="text" [value]="userDetails().nombreUsuario" readonly
+                class="w-full px-4 py-2.5 bg-surface-800/30 border border-surface-700/50 text-surface-400 rounded-lg cursor-not-allowed">
+              <p class="text-xs text-surface-500 mt-1">El nombre de usuario no puede ser modificado</p>
+            </div>
+
+            <!-- Botón de Guardar -->
+            <div class="flex justify-end pt-6 border-t border-surface-800/50">
+              <button type="submit"
+                class="bg-gradient-to-r from-primary to-secondary text-white py-2.5 px-6 rounded-lg font-medium hover:shadow-lg hover:shadow-primary/20 transition-all duration-200 transform hover:scale-[1.02] group">
+                <span class="flex items-center space-x-2">
+                  <span>Guardar Cambios</span>
+                  <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" fill="none"
+                    stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3">
+                    </path>
+                  </svg>
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Columna Secundaria -->
+      <div class="space-y-8">
+        <!-- Tarjeta de Detalles de Cuenta -->
+        <div
+          class="bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 rounded-2xl p-6 shadow-lg shadow-black/10 ring-1 ring-white/5">
+          <div class="flex items-center space-x-4 mb-6 pb-4 border-b border-surface-800/50">
+            <div
+              class="w-10 h-10 bg-gradient-to-br from-accent/20 to-accent/10 rounded-xl flex items-center justify-center ring-1 ring-accent/20">
+              <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold bg-gradient-to-r from-white to-surface-200 bg-clip-text text-transparent">
+              Detalles de Cuenta</h3>
+          </div>
+
+          <div class="space-y-3">
+            <div class="flex justify-between p-3 bg-surface-800/30 rounded-lg">
+              <span class="text-surface-400">Fecha de Registro</span>
+              <span class="text-white">{{userDetails().fechaRegistro | date}}</span>
+            </div>
+
+            <div class="flex justify-between p-3 bg-surface-800/30 rounded-lg">
+              <span class="text-surface-400">Estado:</span>
+              <span class="text-accent font-semibold flex items-center">
+                <span class="w-2 h-2 rounded-full bg-accent mr-2"></span>
+                Activo
+              </span>
+            </div>
+
+            <button (click)="Logout()"
+              class="w-full flex items-center justify-center px-4 py-3 bg-danger/10 border border-danger/20 text-danger rounded-lg hover:bg-danger/20 transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+              </svg>
+              Cerrar Sesión
+            </button>
+          </div>
+        </div>
+
+        <!-- Tarjeta de Acciones -->
+        <div
+          class="bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 rounded-2xl p-6 shadow-lg shadow-black/10 ring-1 ring-white/5">
+          <div class="flex items-center space-x-4 mb-6 pb-4 border-b border-surface-800/50">
+            <div
+              class="w-10 h-10 bg-gradient-to-br from-warning/20 to-warning/10 rounded-xl flex items-center justify-center ring-1 ring-warning/20">
+              <svg class="w-5 h-5 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                </path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-bold bg-gradient-to-r from-white to-surface-200 bg-clip-text text-transparent">
+              Acciones</h3>
+          </div>
+
+          <div class="space-y-3">
+            <button
+              class="w-full flex items-center justify-between px-4 py-3 bg-surface-800/30 border border-surface-700/50 text-white rounded-lg hover:bg-surface-800/50 transition-all duration-200">
+              <div class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-warning" fill="none"
+                  viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
+                </svg>
+                <span>Cambiar Contraseña</span>
+              </div>
+              <svg class="w-5 h-5 text-surface-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </button>
+
+            <button
+              class="w-full flex items-center justify-between px-4 py-3 bg-danger/10 border border-danger/20 text-danger rounded-lg hover:bg-danger/20 transition-all duration-200">
+              <div class="flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+                <span>Eliminar Cuenta</span>
+              </div>
+              <svg class="w-5 h-5 text-danger/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

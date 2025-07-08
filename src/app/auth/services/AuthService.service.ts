@@ -1,12 +1,11 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, Observable, of, throwError } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { User } from '../interfaces/User.interface';
 import { AuthResponse } from '../interfaces/AuthResponse.interface';
 import { TokenService } from './TokenService.service';
 import { UserRole } from '../../shared/enums/UserRole.enum';
-import { UserRequest } from '../interfaces/UserRequest.interface';
 import { RolResponse } from '../interfaces/RolResponse.interface';
 
 @Injectable({ providedIn: 'root' })
@@ -96,7 +95,7 @@ export class AuthService {
     if (!payload) return false;
 
     this._user.set({
-      uid: payload.id,
+      uid: payload.sub,
       email: payload.email,
       roles: payload.roles,
     });

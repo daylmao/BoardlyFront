@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { NavComponent } from '../../../shared/components/nav/nav.component';
+import { AuthService } from '../../../auth/services/AuthService.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,4 +8,6 @@ import { NavComponent } from '../../../shared/components/nav/nav.component';
   templateUrl: './dashboard.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class DashboardComponent {}
+export default class DashboardComponent {
+  id = inject(AuthService).user()!.uid;
+}

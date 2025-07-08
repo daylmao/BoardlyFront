@@ -3,10 +3,11 @@ import { Component, inject, signal } from '@angular/core';
 import RegisterComponent from '../../../shared/components/register/register.component';
 import { AuthService } from '../../services/AuthService.service';
 import { Router } from '@angular/router';
+import { SpinnerComponent } from '../../../shared/components/spinner/spinner.component';
 
 @Component({
   selector: 'app-register-ceo',
-  imports: [RegisterComponent],
+  imports: [RegisterComponent, SpinnerComponent],
   templateUrl: './register-ceo.component.html',
 })
 export default class RegisterCeoComponent {

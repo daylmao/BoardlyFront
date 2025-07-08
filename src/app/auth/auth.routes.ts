@@ -13,7 +13,8 @@ export const authRoutes: Routes = [
 
       {
         path: 'register',
-        loadComponent: () => import('./pages/register/register.component'),
+        loadComponent: () =>
+          import('./pages/register-ceo/register-ceo.component'),
       },
 
       {
@@ -29,7 +30,7 @@ export const authRoutes: Routes = [
       },
 
       {
-        path: 'verify-email',
+        path: 'verify-email/:userId',
         loadComponent: () =>
           import('./pages/verify-email/verify-email.component'),
       },
@@ -54,9 +55,13 @@ export const authRoutes: Routes = [
 
       {
         path: '**',
-        redirectTo: 'register',
+        redirectTo: 'login',
       },
     ],
+  },
+  {
+    path: '**',
+    redirectTo: 'login',
   },
 ];
 

@@ -1,0 +1,287 @@
+<body class="bg-gradient-to-br from-surface-950 via-surface-900 to-surface-950 min-h-screen py-8 font-sans antialiased">
+  <div class="max-w-md mx-auto space-y-8 p-8">
+    <!-- Header -->
+    <div class="text-center">
+      <div class="flex justify-center mb-6">
+        <div
+          class="w-16 h-16 bg-gradient-to-br from-primary via-accent to-secondary rounded-2xl flex items-center justify-center shadow-lg shadow-primary/25 ring-1 ring-white/10 animate-float">
+          <span class="text-white font-bold text-2xl">B</span>
+        </div>
+      </div>
+      <h2 class="text-3xl font-bold bg-gradient-to-r from-white to-surface-200 bg-clip-text text-transparent mb-2">Únete
+        a Boardly</h2>
+      <p class="text-surface-400">Crea tu cuenta y comienza a gestionar proyectos</p>
+    </div>
+
+
+    <!-- Step Indicator -->
+    <div class="flex items-center justify-center space-x-4 mb-8">
+      <div class="flex items-center space-x-2">
+        <div class="flex items-center space-x-2">
+          <div
+            class="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white text-sm font-medium shadow-lg shadow-primary/25">
+            1
+          </div>
+          <span class="text-sm font-medium text-white">Registro</span>
+        </div>
+
+      </div>
+      <div class="w-8 h-0.5 bg-surface-700"></div>
+      <div class="flex items-center space-x-2">
+        <div
+          class="w-8 h-8 bg-surface-700 rounded-full flex items-center justify-center text-surface-400 text-sm font-medium">
+          2
+        </div>
+
+        <span class="text-sm font-medium text-surface-400">Código</span>
+
+      </div>
+
+
+    </div>
+
+    <!-- Registration Form -->
+    <form class="space-y-6" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <!-- Nombre -->
+      <div class=" space-y-2 relative">
+        <label for="nombre" class="block text-sm font-medium text-surface-300">
+          Nombre *
+        </label>
+        <input id="nombre" name="nombre" type="text" required
+          class="w-full px-4 py-3 bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 shadow-xl shadow-black/20 ring-1 ring-white/5"
+          placeholder="Ej: Juan" formControlName="Nombre" />
+        <p class="text-xs text-surface-500">Solo letras y apóstrofes (')</p>
+
+        @if (validators.isValidField(registerForm, "Nombre")) {
+        <div
+          class="absolute -top-2 right-3 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
+          <div class="relative flex h-2.5 w-2.5">
+            <div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/70 opacity-80"></div>
+            <div class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary"></div>
+          </div>
+          <span class="text-[11px] font-medium text-accent">
+            {{ validators.getFieldError(registerForm, "Nombre") }}
+          </span>
+        </div>
+        }
+      </div>
+
+      <!-- Apellido -->
+      <div class="space-y-2 relative">
+        <label for="lastName" class="block text-sm font-medium text-surface-300">
+          Apellido *
+        </label>
+        <input id="lastName" name="lastName" type="text" required
+          class="w-full px-4 py-3 bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 shadow-xl shadow-black/20 ring-1 ring-white/5"
+          placeholder="Ej: Pérez" formControlName="Apellido" />
+        <p class="text-xs text-surface-500">Solo letras y apóstrofes (')</p>
+
+        @if (validators.isValidField(registerForm, "Apellido")) {
+        <div
+          class="absolute -top-2 right-3 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
+          <div class="relative flex h-2.5 w-2.5">
+            <div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/70 opacity-80"></div>
+            <div class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary"></div>
+          </div>
+          <span class="text-[11px] font-medium text-accent">
+            {{ validators.getFieldError(registerForm, "Apellido") }}
+          </span>
+        </div>
+        }
+      </div>
+
+      <div class="space-y-2 relative">
+        <label for="username" class="block text-sm font-medium text-surface-300">
+          Nombre de Usuario *
+        </label>
+        <input id="username" name="username" type="text" required
+          class="w-full px-4 py-3 bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 shadow-xl shadow-black/20 ring-1 ring-white/5"
+          placeholder="Ej: juan_perez23" formControlName="NombreUsuario" />
+        <p class="text-xs text-surface-500">Empieza con letra, puede contener números</p>
+
+        @if (validators.isValidField(registerForm, "NombreUsuario")) {
+        <div
+          class="absolute -top-2 right-3 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
+          <div class="relative flex h-2.5 w-2.5">
+            <div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/70 opacity-80"></div>
+            <div class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary"></div>
+          </div>
+          <span class="text-[11px] font-medium text-accent">
+            {{ validators.getFieldError(registerForm, "NombreUsuario") }}
+          </span>
+        </div>
+        }
+      </div>
+
+      <div class="space-y-2 relative">
+        <label for="fotoPerfil" class="block text-sm font-medium text-surface-300">
+          Foto de Perfil
+        </label>
+        <div class="flex items-center space-x-4">
+          <div class="relative">
+            <div
+              class="w-16 h-16 rounded-full bg-surface-800/50 border border-surface-700/50 flex items-center justify-center overflow-hidden shadow-xl shadow-black/20 ring-1 ring-white/5">
+
+
+              @if(tempImage()) {
+              <img [src]="tempImage()" alt="temp image" class="w-full h-full object-cover" />
+              } @else {
+              <svg class="w-8 h-8 text-surface-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+              </svg>
+              }
+
+            </div>
+            <input type="file" id="fotoPerfil" name="FotoPerfil" accept=".png, .jpg, .jpeg, jpg" class="hidden"
+              (change)="onFilesChanged($event)" formControlName="FotoPerfil">
+
+
+          </div>
+          <div class="flex-1">
+            <label for="fotoPerfil"
+              class="cursor-pointer w-full px-4 py-3 bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 text-white rounded-xl flex items-center justify-center hover:bg-surface-800/50 transition-all duration-300 shadow-xl shadow-black/20 ring-1 ring-white/5">
+              <span class="text-sm">Subir imagen</span>
+            </label>
+          </div>
+        </div>
+        <p class="text-xs text-surface-500">Formatos aceptados: JPG, PNG (Max. 5MB)</p>
+      </div>
+
+      <div class="space-y-2 relative">
+        <label for="correo" class="block text-sm font-medium text-surface-300">
+          Correo Electrónico *
+        </label>
+        <input id="email" name="email" type="email" autocomplete="email" required
+          class="w-full px-4 py-3 bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 shadow-xl shadow-black/20 ring-1 ring-white/5"
+          placeholder="Ej: juan@email.com" formControlName="Correo" />
+
+        @if (validators.isValidField(registerForm, "Correo")) {
+        <div
+          class="absolute -top-2 right-3 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
+          <div class="relative flex h-2.5 w-2.5">
+            <div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/70 opacity-80"></div>
+            <div class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary"></div>
+          </div>
+          <span class="text-[11px] font-medium text-accent">
+            {{ validators.getFieldError(registerForm, "Correo") }}
+          </span>
+        </div>
+        }
+      </div>
+
+
+      <!-- Contraseña -->
+      <div class="space-y-2 relative">
+        <label for="password" class="block text-sm font-medium text-surface-300">
+          Contraseña *
+        </label>
+        <div class="relative">
+          <input id="password" [type]="showPassword ? 'text' : 'password'" autocomplete="new-password" required
+            class="w-full px-4 py-3 bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 shadow-xl shadow-black/20 ring-1 ring-white/5 pr-10"
+            placeholder="••••••••" formControlName="Contrasena"
+            (input)="registerForm.get('Contrasena')?.updateValueAndValidity()" />
+          <button type="button" (click)="togglePasswordVisibility()"
+            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-surface-400 hover:text-surface-200 focus:outline-none"
+            [attr.aria-label]="showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+              @if (showPassword) {
+              <path
+                d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+              </path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+              }
+            </svg>
+          </button>
+        </div>
+        <p class="text-xs text-surface-500">Mínimo 8 caracteres, con mayúscula y número</p>
+
+        @if (validators.isValidField(registerForm, "Contrasena")) {
+        <div
+          class="absolute -top-2 right-3 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
+          <div class="relative flex h-2.5 w-2.5">
+            <div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/70 opacity-80"></div>
+            <div class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary"></div>
+          </div>
+          <span class="text-[11px] font-medium text-accent">
+            {{ validators.getFieldError(registerForm, "Contrasena") }}
+          </span>
+        </div>
+        }
+      </div>
+
+      <!-- Confirmar Contraseña -->
+      <!-- <div class="space-y-2 relative">
+        <label for="confirmPassword" class="block text-sm font-medium text-surface-300">
+          Confirmar Contraseña *
+        </label>
+        <div class="relative">
+          <input id="confirmPassword" [type]="showConfirmPassword ? 'text' : 'password'" autocomplete="new-password"
+            required
+            class="w-full px-4 py-3 bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 shadow-xl shadow-black/20 ring-1 ring-white/5 pr-10"
+            placeholder="••••••••" formControlName="confirmPassword" />
+          <button type="button" (click)="toggleConfirmPasswordVisibility()"
+            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-surface-400 hover:text-surface-200 focus:outline-none"
+            [attr.aria-label]="showConfirmPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+              @if (showConfirmPassword) {
+              <path
+                d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+              </path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+              }
+            </svg>
+          </button>
+        </div>
+        <p class="text-xs text-surface-500">Vuelve a escribir tu contraseña</p>
+
+        @if (validators.isValidField(registerForm, "confirmPassword")) {
+        <div
+          class="absolute -top-2 right-3 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
+          <div class="relative flex h-2.5 w-2.5">
+            <div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/70 opacity-80"></div>
+            <div class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary"></div>
+          </div>
+          <span class="text-[11px] font-medium text-accent">
+            {{ validators.getFieldError(registerForm, "confirmPassword") }}
+          </span>
+        </div>
+        }
+      </div> -->
+
+      <!-- Submit Button -->
+      <button type="submit"
+        class="cursor-pointer w-full bg-gradient-to-r from-primary via-accent to-secondary text-white py-3 px-4 rounded-xl font-medium hover:shadow-xl hover:shadow-primary/25 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-surface-950 transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-0.5">
+        Crear Cuenta
+      </button>
+    </form>
+
+    <!-- Login Link -->
+    <div class="text-center">
+      <p class="text-sm text-surface-400">
+        ¿Ya tienes una cuenta?
+        <a routerLink="/auth/login"
+          class="font-medium text-primary hover:text-secondary transition-colors duration-200">
+          Inicia sesión aquí
+        </a>
+      </p>
+    </div>
+
+    <!-- Back to Home -->
+    <div class="text-center">
+      <a (click)="goBack()"
+        class="cursor-pointer inline-flex items-center space-x-2 text-sm text-surface-500 hover:text-surface-300 transition-colors duration-200">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        <a (click)="goBack()" class="cursor-pointer">Volver al inicio de sesión</a>
+      </a>
+    </div>
+  </div>
+</body>

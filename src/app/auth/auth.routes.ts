@@ -16,6 +16,11 @@ export const authRoutes: Routes = [
         loadComponent: () =>
           import('./pages/register-ceo/register-ceo.component'),
       },
+      {
+        path: 'register/:empresaId',
+        loadComponent: () =>
+          import('./pages/register-employee/register-employee.component'),
+      },
 
       {
         path: 'forgot-password',
@@ -31,6 +36,12 @@ export const authRoutes: Routes = [
 
       {
         path: 'verify-email/:userId',
+        loadComponent: () =>
+          import('./pages/verify-email/verify-email.component'),
+      },
+
+      {
+        path: 'verify-email/:userId/:empresaId',
         loadComponent: () =>
           import('./pages/verify-email/verify-email.component'),
       },

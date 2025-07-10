@@ -7,6 +7,7 @@ import { AuthResponse } from '../interfaces/AuthResponse.interface';
 import { TokenService } from './TokenService.service';
 import { UserRole } from '../../shared/enums/UserRole.enum';
 import { RolResponse } from '../interfaces/RolResponse.interface';
+import { RegisterEmployeeRequest } from '../interfaces/RegisterEmployeeRequest.interface';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -42,7 +43,8 @@ export class AuthService {
   register(data: FormData): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.baseUrl}/users`, data);
   }
-  confirmCeoAccount(userId: string, codigo: string): Observable<string> {
+
+  confirmAccount(userId: string, codigo: string): Observable<string> {
     const options = {
       params: { userId },
       responseType: 'text' as const,
@@ -56,10 +58,11 @@ export class AuthService {
   }
 
   giveCeoRol(userId: string): Observable<RolResponse> {
-    return this.http.post<RolResponse>(
-      `${this.baseUrl}/user-type/ceo/${userId}`,
-      {}
-    );
+    return this.http.post<RolResponse>(`${this.baseUrl}/ceos/${userId}`, {});
+  }
+
+  giveEmployeeRol(request: RegisterEmployeeRequest): Observable<string> {
+    return this.http.post<string>(`${this.baseUrl}/employee`, request);
   }
 
   logout(): void {

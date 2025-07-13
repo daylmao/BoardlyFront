@@ -94,14 +94,16 @@ export class AuthService {
   }
 
   private loadUserFromToken(): boolean {
-    const payload = this.tokenService.payload();
+    const payload = this.tokenService.getPayload();
     if (!payload) return false;
 
     this._user.set({
       uid: payload.sub,
       email: payload.email,
       roles: payload.roles,
+      ceoId: payload.ceoId,
     });
+
     return true;
   }
 }

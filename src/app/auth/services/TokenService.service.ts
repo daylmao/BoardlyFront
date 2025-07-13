@@ -1,9 +1,10 @@
 import { Injectable, signal, computed } from '@angular/core';
+import { JwtPayload } from '../interfaces/JwtPayload.interface';
 
 @Injectable({ providedIn: 'root' })
 export class TokenService {
   private _token = signal<string | null>(localStorage.getItem('token'));
-  private _payload = signal<any | null>(this.decodeToken(this._token()));
+  private _payload = signal<JwtPayload | null>(this.decodeToken(this._token()));
 
   readonly token = computed(() => this._token());
   readonly payload = computed(() => this._payload());
@@ -16,6 +17,10 @@ export class TokenService {
 
   get(): string | null {
     return this._token();
+  }
+
+  getPayload(): JwtPayload | null {
+    return this._payload();
   }
 
   clear() {

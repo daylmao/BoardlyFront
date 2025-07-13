@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   inject,
+  OnInit,
   signal,
 } from '@angular/core';
 import { CompanyService } from '../../services/Company.service';
@@ -22,39 +23,26 @@ import { tap } from 'rxjs';
 })
 export class CompaniesComponent {
   private companyService = inject(CompanyService);
-  private userId = inject(AuthService).user()?.uid;
-  private ceoService = inject(CeoService);
+  private authService = inject(AuthService);
 
   paginaActual = signal(1);
-  ceoId = toSignal(this.ceoService.getCeoId(this.userId!));
   totalElementos = signal(0);
 
   totalPaginas = computed(() => this.cargarEmpresas.value()?.totalPaginas ?? 0);
 
   cargarEmpresas = rxResource({
-    request: () => {
-      const ceoId = this.ceoId();
-      const pagina = this.paginaActual();
-      this.totalElementos();
-      if (!ceoId) return;
-      return {
-        ceoId,
-        paginaActual: pagina,
-        elementos: 3,
-      };
+    request: () => ({
+      ceoId: this.authService.user()?.ceoId,
+      numeroPagina: this.paginaActual(),
+      tamanoPagina: 3,
+    }),
+    loader: ({ request }) => {
+      return this.companyService.getEmpresasPaginadas(
+        request.ceoId!,
+        request.numeroPagina,
+        request.tamanoPagina
+      );
     },
-    loader: ({ request }) =>
-      this.companyService
-        .getEmpresasPaginadas(
-          request!.ceoId,
-          request!.paginaActual,
-          request!.elementos
-        )
-        .pipe(
-          tap((response) => {
-            this.totalElementos.set(response.totalElementos);
-          })
-        ),
   });
 
   paginaAnterior() {

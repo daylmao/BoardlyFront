@@ -27,10 +27,8 @@ import { toast } from 'ngx-sonner';
 export default class CreateCompanyComponent {
   private company = inject(CompanyService);
   private fb = inject(FormBuilder);
-  private userId = inject(AuthService).user()?.uid;
   private route = inject(Router);
-  private ceoService = inject(CeoService);
-  readonly ceoIdSignal = toSignal(this.ceoService.getCeoId(this.userId!));
+  private authService = inject(AuthService);
   validators = FormValidators;
 
   createCompanyForm: FormGroup = this.fb.group({
@@ -39,16 +37,12 @@ export default class CreateCompanyComponent {
     descripcion: ['', [Validators.required]],
   });
 
-  readonly updateCeoIdEffect = effect(() => {
-    const ceoId = this.ceoIdSignal();
-    if (ceoId) {
-      this.createCompanyForm.get('ceoId')?.setValue(ceoId);
-    }
-  });
-
   onSubmit() {
     if (this.createCompanyForm.invalid)
       return this.createCompanyForm.markAllAsTouched();
+
+    const ceoId = this.authService.user()?.ceoId;
+    this.createCompanyForm.get('ceoId')?.setValue(ceoId);
 
     this.company.createCompany(this.createCompanyForm.value).subscribe(() => {
       toast.success('Empresa creada con exito!');

@@ -34,8 +34,9 @@ export default class LoginComponent {
       this.loginForm.markAllAsTouched();
     }
 
-    const { Correo = '', Contrasena = '' } = this.loginForm.value;
-    console.log(this.loginForm.value);
+    let { Correo = '', Contrasena = '' } = this.loginForm.value;
+
+    Correo = Correo.toLowerCase();
 
     this.authService.login(Correo, Contrasena).subscribe((isAuthenticated) => {
       if (isAuthenticated) {

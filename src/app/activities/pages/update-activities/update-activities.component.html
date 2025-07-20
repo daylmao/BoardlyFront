@@ -1,0 +1,179 @@
+<body class="bg-gradient-to-br from-surface-950 via-surface-900 to-surface-950 min-h-screen font-sans antialiased">
+
+
+  <div class="max-w-5xl mx-auto px-6 py-8">
+
+    <div
+      class="bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 rounded-3xl p-8 shadow-2xl shadow-black/20 ring-1 ring-white/5">
+      <div class="flex items-center space-x-4 mb-8">
+        <div
+          class="w-12 h-12 bg-gradient-to-br from-warning/20 to-accent/20 rounded-2xl flex items-center justify-center ring-1 ring-warning/20">
+          <svg class="w-6 h-6 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+            </path>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold text-white">Información de la Actividad</h2>
+          <p class="text-surface-400">Actualiza los detalles y configuración de la actividad</p>
+
+        </div>
+      </div>
+
+      <form [formGroup]="updateActivityForm" (ngSubmit)="onSubmit()" class="space-y-8">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-3 relative">
+            <label for="activity-name" class="block text-sm font-semibold text-surface-200">
+              Nombre de la Actividad *
+            </label>
+            <input id="activity-name" name="activity-name" type="text" required placeholder="Ej: Desarrollo Frontend"
+              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-warning focus:border-warning/50 transition-all duration-300 hover:border-surface-600"
+              formControlName="nombre">
+            @if (validators.isValidField(updateActivityForm, "nombre")) {
+            <div
+              class="absolute -top-2 right-3 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
+              <div class="relative flex h-2.5 w-2.5">
+                <div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/70 opacity-80"></div>
+                <div class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary">
+                </div>
+              </div>
+              <span class="text-[11px] font-medium text-accent">
+                {{ validators.getFieldError(updateActivityForm, "nombre") }}
+              </span>
+            </div>
+            }
+          </div>
+
+          <!-- <div class="space-y-3 relative">
+            <label for="activity-priority" class="block text-sm font-semibold text-surface-200">
+              Prioridad *
+            </label>
+            <select id="activity-priority" name="activity-priority" required
+              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-warning focus:border-warning/50 transition-all duration-300 hover:border-surface-600">
+              <option [ngValue]="0" class="bg-surface-800">🟢 Baja</option>
+              <option [ngValue]="1" selected class="bg-surface-800">🟠 Media</option>
+              <option [ngValue]="2" class="bg-surface-800">🔴 Alta</option>
+            </select>
+
+          </div> -->
+        </div>
+
+        <div class="space-y-3">
+          <label for="activity-description" class="block text-sm font-semibold text-surface-200">
+            Descripción de la Actividad *
+          </label>
+          <textarea id="activity-description" name="activity-description" required rows="4"
+            placeholder="Describe los objetivos y alcance de esta actividad..."
+            class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-warning focus:border-warning/50 transition-all duration-300 hover:border-surface-600 resize-none"
+            formControlName="descripcion"></textarea>
+        </div>
+
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- <div class="space-y-3">
+            <label for="activity-order" class="block text-sm font-semibold text-surface-200">
+              Orden de Ejecución
+            </label>
+            <input id="activity-order" name="activity-order" type="number" value="1" min="1"
+              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-warning focus:border-warning/50 transition-all duration-300 hover:border-surface-600">
+          </div> -->
+
+          <div class="space-y-3 relative">
+            <label for="activity-status" class="block text-sm font-semibold text-surface-200">
+              Estado Actual
+            </label>
+            <select id="activity-status" name="activity-status"
+              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-warning focus:border-warning/50 transition-all duration-300 hover:border-surface-600"
+              formControlName="estado">
+              <option [ngValue]="0" class="bg-surface-800">🟢 Baja</option>
+              <option [ngValue]="1" class="bg-surface-800">🟠 Media</option>
+              <option [ngValue]="2" class="bg-surface-800">🔴 Alta</option>
+            </select>
+          </div>
+
+
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-3 relative">
+            <label for="activity-start-date" class="block text-sm font-semibold text-surface-200">
+              Fecha de Inicio
+            </label>
+            <input id="activity-start-date" name="activity-start-date" type="date"
+              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-warning focus:border-warning/50 transition-all duration-300 hover:border-surface-600">
+            @if (validators.isValidField(updateActivityForm, "fechaInicio")) {
+            <div
+              class="absolute -top-2 right-3 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
+              <div class="relative flex h-2.5 w-2.5">
+                <div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/70 opacity-80"></div>
+                <div class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary">
+                </div>
+              </div>
+              <span class="text-[11px] font-medium text-accent">
+                {{ validators.getFieldError(updateActivityForm, "fechaInicio") }}
+              </span>
+            </div>
+            }
+          </div>
+
+          <div class="space-y-3 relative">
+            <label for="activity-end-date" class="block text-sm font-semibold text-surface-200">
+              Fecha de Finalización
+            </label>
+            <input id="activity-end-date" name="activity-end-date" type="date" value="2024-01-30"
+              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-warning focus:border-warning/50 transition-all duration-300 hover:border-surface-600"
+              formControlName="fechaFin">
+
+          </div>
+        </div>
+
+
+        <div
+          class="p-6 bg-gradient-to-r from-warning/10 via-accent/10 to-secondary/10 border border-warning/20 rounded-2xl backdrop-blur-sm">
+          <div class="flex items-start space-x-4">
+            <div class="w-10 h-10 bg-warning/20 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-semibold text-warning mb-2">Gestión de Actividades</h4>
+              <div class="text-warning/80 text-sm space-y-1">
+                <p>• Las actividades organizan las tareas dentro de un proyecto específico</p>
+                <p>• El orden de ejecución determina la secuencia de trabajo</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div
+          class="flex flex-col sm:flex-row justify-between pt-8 border-t border-surface-800/50 space-y-4 sm:space-y-0">
+          <button (click)="goBack()"
+            class="group bg-surface-800/50 backdrop-blur-sm text-surface-300 border border-surface-700/50 py-3.5 px-8 rounded-xl font-medium hover:bg-surface-700/50 hover:text-white transition-all duration-300 text-center hover:scale-[1.02]">
+            <span class="flex items-center justify-center space-x-2">
+              <svg class="w-4 h-4 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+              <span>Cancelar</span>
+            </span>
+          </button>
+          <button type="submit"
+            class="group bg-gradient-to-r from-warning via-accent to-secondary text-white py-3.5 px-10 rounded-xl font-semibold hover:shadow-xl hover:shadow-warning/25 transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-0.5">
+            <span class="flex items-center justify-center space-x-2">
+              <svg class="w-5 h-5 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              <span>Guardar Cambios</span>
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>

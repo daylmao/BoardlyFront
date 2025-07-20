@@ -1,0 +1,181 @@
+<body class="bg-gradient-to-br from-surface-950 via-surface-900 to-surface-950 min-h-screen font-sans antialiased">
+
+  <div class="max-w-5xl mx-auto px-6 py-8">
+
+    <div
+      class="bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 rounded-3xl p-8 shadow-2xl shadow-black/20 ring-1 ring-white/5">
+      <div class="flex items-center space-x-4 mb-8">
+        <div
+          class="w-12 h-12 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl flex items-center justify-center ring-1 ring-primary/20">
+          <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
+            </path>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold text-white">Información del Proyecto</h2>
+          <p class="text-surface-400">Configura los aspectos fundamentales del proyecto</p>
+        </div>
+      </div>
+
+      <form class="space-y-8" [formGroup]="projectForm" (ngSubmit)="onSubmit()">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-3 relative">
+            <label for="project-name" class="block text-sm font-semibold text-surface-200">
+              Nombre del Proyecto *
+            </label>
+            <input id="project-name" type="text" required placeholder="Ej: Sistema de Gestión de Inventario"
+              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 hover:border-surface-600"
+              formControlName="nombre">
+
+            @if (validators.isValidField(projectForm, "nombre")) {
+            <div
+              class="absolute -top-2 right-3 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
+              <div class="relative flex h-2.5 w-2.5">
+                <div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/70 opacity-80"></div>
+                <div class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary">
+                </div>
+              </div>
+              <span class="text-[11px] font-medium text-accent">
+                {{ validators.getFieldError(projectForm, "nombre") }}
+              </span>
+            </div>
+            }
+          </div>
+
+          <div class="space-y-3">
+            <label for="project-manager" class="block text-sm font-semibold text-surface-200">
+              Encargado del Proyecto *
+            </label>
+            <select id="project-manager" required formControlName="empleadoId"
+              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 hover:border-surface-600">
+
+              <option value="" disabled selected class="bg-surface-800">Selecciona un encargado</option>
+
+              @for (emp of empleados(); track emp.empleadoId) {
+              <option [value]="emp.empleadoId" class="bg-surface-800">
+                👤 {{ emp.nombre }}
+              </option>
+              }
+
+            </select>
+
+          </div>
+        </div>
+
+        <div class="space-y-3">
+          <label for="project-description" class="block text-sm font-semibold text-surface-200">
+            Descripción del Proyecto *
+          </label>
+          <textarea id="project-description" required rows="4"
+            placeholder="Describe los objetivos, alcance, características principales y valor esperado del proyecto..."
+            class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 hover:border-surface-600 resize-none"
+            formControlName="descripcion"></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="space-y-3">
+            <label for="start-date" class="block text-sm font-semibold text-surface-200">
+              Fecha de Inicio *
+            </label>
+            <input id="start-date" type="date" required
+              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 hover:border-surface-600"
+              formControlName="fechaInicio">
+          </div>
+
+          <div class="space-y-3">
+            <label for="end-date" class="block text-sm font-semibold text-surface-200">
+              Fecha de Entrega Estimada
+            </label>
+            <input id="end-date" type="date"
+              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 hover:border-surface-600"
+              formControlName="fechaFin">
+          </div>
+
+          <div class="space-y-3">
+            <label for="project-status" class="block text-sm font-semibold text-surface-200">
+              Estado Inicial
+            </label>
+            <select id="project-status" formControlName="estado" class=" w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white
+              rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all
+              duration-300 hover:border-surface-600">
+              <option [ngValue]="0" class="bg-surface-800">📋 En Proceso</option>
+              <option [ngValue]="1" class="bg-surface-800">✅ Finalizado</option>
+            </select>
+          </div>
+        </div>
+
+
+        <div
+          class="p-6 bg-gradient-to-r from-primary/10 via-accent/10 to-secondary/10 border border-primary/20 rounded-2xl backdrop-blur-sm">
+          <div class="flex items-start space-x-4">
+            <div class="w-10 h-10 bg-primary/20 rounded-xl flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-semibold text-primary mb-2">Flujo de Trabajo del Proyecto</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-primary/80 text-sm">
+                <div class="space-y-2">
+                  <div class="flex items-center space-x-2">
+                    <span
+                      class="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center text-xs font-bold">1</span>
+                    <span>Crear el proyecto con información básica</span>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <span
+                      class="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center text-xs font-bold">2</span>
+                    <span>Definir actividades dentro del proyecto</span>
+                  </div>
+                </div>
+                <div class="space-y-2">
+                  <div class="flex items-center space-x-2">
+                    <span
+                      class="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center text-xs font-bold">3</span>
+                    <span>Crear tareas específicas por actividad</span>
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <span
+                      class="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center text-xs font-bold">4</span>
+                    <span>Gestionar con tablero Kanban</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="flex flex-col sm:flex-row justify-between pt-8 border-t border-surface-800/50 space-y-4 sm:space-y-0">
+          <a href="dashboard-ceo.html"
+            class="group bg-surface-800/50 backdrop-blur-sm text-surface-300 border border-surface-700/50 py-3.5 px-8 rounded-xl font-medium hover:bg-surface-700/50 hover:text-white transition-all duration-300 text-center hover:scale-[1.02]">
+            <span class="flex items-center justify-center space-x-2">
+              <svg class="w-4 h-4 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+              <span>Cancelar</span>
+            </span>
+          </a>
+          <button type="submit"
+            class="group bg-gradient-to-r from-primary via-accent to-secondary text-white py-3.5 px-10 rounded-xl font-semibold hover:shadow-xl hover:shadow-primary/25 transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-0.5">
+            <span class="flex items-center justify-center space-x-2">
+              <svg class="w-5 h-5 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+                </path>
+              </svg>
+              <span>Crear Proyecto</span>
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+</body>

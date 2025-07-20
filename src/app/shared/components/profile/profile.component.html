@@ -1,16 +1,15 @@
 <body class="bg-gradient-to-br from-surface-950 via-surface-900 to-surface-950 min-h-screen font-sans antialiased">
-  <app-nav [title]="'Boardly - Ceo Dashboard'" [description]="'no sabe tu'" [imageProfile]="''" [profileId]="id" />
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-    <!-- Header añadido para mejor jerarquía -->
+
     <div class="mb-8">
       <h1 class="text-2xl sm:text-3xl font-bold text-white mb-2">Configuración de Perfil</h1>
       <p class="text-surface-400">Administra tu información personal y configuración de cuenta</p>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <!-- Columna Principal -->
+
       <div class="lg:col-span-2 space-y-8">
-        <!-- Tarjeta de Información Personal -->
+
         <div
           class="bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 rounded-2xl p-6 shadow-lg shadow-black/10 ring-1 ring-white/5">
           <div class="flex items-center space-x-4 mb-6 pb-4 border-b border-surface-800/50">
@@ -26,9 +25,9 @@
           </div>
 
           <form class="space-y-6">
-            <!-- Foto y Nombre de Usuario -->
+
             <div class="flex flex-col sm:flex-row sm:items-center gap-6">
-              <!-- Contenedor de la foto -->
+
               <div class="flex-shrink-0 relative group">
                 <input type="file" id="profile-upload" accept="image/*" class="hidden">
                 <label for="profile-upload" class="cursor-pointer block">
@@ -52,7 +51,7 @@
                 </label>
               </div>
 
-              <!-- Información del usuario -->
+
               <div>
                 <h2 class="text-2xl font-bold text-white">{{userDetails().nombre}} {{userDetails().apellido}}</h2>
                 <p class="text-surface-400">{{ '@' + userDetails().nombreUsuario }}</p>
@@ -67,7 +66,7 @@
               </div>
             </div>
 
-            <!-- Campos de Información -->
+
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div class="space-y-2">
                 <label for="nombre" class="block text-sm font-medium text-surface-300">
@@ -103,7 +102,7 @@
               <p class="text-xs text-surface-500 mt-1">El nombre de usuario no puede ser modificado</p>
             </div>
 
-            <!-- Botón de Guardar -->
+
             <div class="flex justify-end pt-6 border-t border-surface-800/50">
               <button type="submit"
                 class="bg-gradient-to-r from-primary to-secondary text-white py-2.5 px-6 rounded-lg font-medium hover:shadow-lg hover:shadow-primary/20 transition-all duration-200 transform hover:scale-[1.02] group">
@@ -121,9 +120,9 @@
         </div>
       </div>
 
-      <!-- Columna Secundaria -->
+
       <div class="space-y-8">
-        <!-- Tarjeta de Detalles de Cuenta -->
+
         <div
           class="bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 rounded-2xl p-6 shadow-lg shadow-black/10 ring-1 ring-white/5">
           <div class="flex items-center space-x-4 mb-6 pb-4 border-b border-surface-800/50">
@@ -164,7 +163,7 @@
           </div>
         </div>
 
-        <!-- Tarjeta de Acciones -->
+
         <div
           class="bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 rounded-2xl p-6 shadow-lg shadow-black/10 ring-1 ring-white/5">
           <div class="flex items-center space-x-4 mb-6 pb-4 border-b border-surface-800/50">

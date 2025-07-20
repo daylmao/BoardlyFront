@@ -7,27 +7,14 @@ export const ceoRoutes: Routes = [
     component: CeoLayoutComponent,
     children: [
       {
-        path: 'company',
-        loadComponent: () =>
-          import('./pages/create-company/create-company.component'),
-      },
-
-      {
-        path: 'company/:id/update',
-        loadComponent: () =>
-          import('./pages/update-company/update-company.component'),
-      },
-
-      {
-        path: 'company/:id/delete',
-        loadComponent: () =>
-          import('./pages/delete-company/delete-company.component'),
-      },
-
-      {
         path: 'profile/:id',
         loadComponent: () =>
           import('./pages/ceo-profile/ceo-profile.component'),
+      },
+
+      {
+        path: 'companies',
+        loadChildren: () => import('../companies/companies.routes'),
       },
 
       {

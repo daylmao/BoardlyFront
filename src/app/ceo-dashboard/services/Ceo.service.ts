@@ -12,8 +12,4 @@ export class CeoService {
   getUserDetails(userId: string): Observable<UserDetails> {
     return this.http.get<UserDetails>(`${this.baseUrl}/users/${userId}`);
   }
-
-  getCeoId(userId: string): Observable<string> {
-    return this.http.get<string>(`${this.baseUrl}/ceos/${userId}`);
-  }
 }

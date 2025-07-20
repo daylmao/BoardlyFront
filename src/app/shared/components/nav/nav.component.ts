@@ -16,6 +16,5 @@ import { AuthService } from '../../../auth/services/AuthService.service';
 export class NavComponent {
   readonly title = input.required<string>();
   readonly description = input.required<string>();
-  readonly imageProfile = input.required<string>();
-  readonly profileId = input.required<string>();
+  readonly profileId = input<string>();
 }

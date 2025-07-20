@@ -1,0 +1,63 @@
+<div class="relative py-8">
+
+  <div class="flex justify-between items-center mb-6 px-2">
+    <h2 class="text-2xl font-bold bg-gradient-to-r from-white to-surface-300 bg-clip-text text-transparent">
+      Mis Empresas
+    </h2>
+    <div class="space-y-4">
+      <a routerLink="companies/new"
+        class="group w-full bg-gradient-to-r from-primary via-accent to-secondary text-white py-4 px-6 rounded-xl font-semibold hover:shadow-xl hover:shadow-primary/25 transition-all duration-300 flex items-center justify-center space-x-3 transform hover:scale-[1.02] hover:-translate-y-0.5">
+        <svg class="w-5 h-5 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+          </path>
+        </svg>
+        <span>Nueva Empresa</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-6">
+
+    <button (click)="paginaAnterior()" [disabled]="paginaActual() <= 1"
+      class="p-4 rounded-xl bg-surface-900/70 backdrop-blur-sm border border-surface-800/50 text-surface-300 hover:bg-surface-800/80 hover:text-primary hover:border-primary/30 transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-surface-900/70 disabled:hover:border-surface-800/50 disabled:hover:text-surface-300 group shadow-sm hover:shadow-primary/20 flex-shrink-0"
+      aria-label="Página anterior">
+      <svg class="w-6 h-6 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor"
+        viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 flex-grow w-full">
+      @if (cargarEmpresas.isLoading()) {
+      <app-spinner [title]="'Cargando...'" />
+      }
+
+      @if (cargarEmpresas.hasValue()) {
+      @for (empresa of cargarEmpresas.value().elementos; track empresa.empresaId) {
+      <app-company-card [company]="empresa"></app-company-card>
+      }
+      } @else {
+      <p class="col-span-full text-center text-surface-400">No hay empresas disponibles.</p>
+      }
+    </div>
+
+    <button (click)="paginaSiguiente()" [disabled]="paginaActual() >= totalPaginas()"
+      class="p-4 rounded-xl bg-surface-900/70 backdrop-blur-sm border border-surface-800/50 text-surface-300 hover:bg-surface-800/80 hover:text-primary hover:border-primary/30 transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-surface-900/70 disabled:hover:border-surface-800/50 disabled:hover:text-surface-300 group shadow-sm hover:shadow-primary/20 flex-shrink-0"
+      aria-label="Página siguiente">
+      <svg class="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor"
+        viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+  </div>
+
+  <div class="mt-8 text-center">
+    <div
+      class="inline-flex items-center gap-3 bg-surface-900/60 backdrop-blur-lg px-5 py-2 rounded-full border border-surface-800/50 shadow-lg shadow-black/10">
+      <span class="text-primary font-bold text-lg">{{ paginaActual() }}</span>
+      <span class="text-surface-400">de</span>
+      <span class="text-accent font-medium">{{ totalPaginas() }}</span>
+    </div>
+  </div>
+</div>

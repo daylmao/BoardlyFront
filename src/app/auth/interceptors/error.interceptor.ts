@@ -19,6 +19,7 @@ export function ErrorInterceptor(
         const mensaje =
           error.error?.descripcion ||
           error.error?.message ||
+          error.error?.titulo ||
           'Un error inesperado ha ocurrido.';
         toast.error(mensaje);
       }

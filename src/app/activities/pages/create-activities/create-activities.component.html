@@ -1,0 +1,196 @@
+<body class="bg-gradient-to-br from-surface-950 via-surface-900 to-surface-950 min-h-screen font-sans antialiased">
+
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+
+    <div
+      class="bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 rounded-3xl p-8 shadow-2xl shadow-black/20 ring-1 ring-white/5">
+      <div class="flex items-center space-x-4 mb-8">
+        <div
+          class="w-12 h-12 bg-gradient-to-br from-primary/20 to-accent/20 rounded-2xl flex items-center justify-center ring-1 ring-primary/20">
+          <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01">
+            </path>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-2xl font-bold text-white">Información de la Nueva Actividad</h2>
+          <p class="text-surface-400">Define los detalles y configuración de la actividad</p>
+        </div>
+      </div>
+
+      <form class="space-y-8" [formGroup]="activityForm" (ngSubmit)="onSubmit()">
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 relative">
+          <div class="space-y-3">
+            <label for="activity-name" class="block text-sm font-semibold text-surface-200">
+              Nombre de la Actividad *
+            </label>
+            <input id="activity-name" type="text" required placeholder="Ej: Desarrollo Frontend"
+              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 hover:border-surface-600"
+              formControlName="nombre" />
+            @if (validators.isValidField(activityForm, "nombre")) {
+            <div
+              class="absolute -top-2 right-3 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
+              <div class="relative flex h-2.5 w-2.5">
+                <div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/70 opacity-80"></div>
+                <div class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary">
+                </div>
+              </div>
+              <span class="text-[11px] font-medium text-accent">
+                {{ validators.getFieldError(activityForm, "nombre") }}
+              </span>
+            </div>
+            }
+          </div>
+        </div>
+
+        <div class="space-y-3 relative">
+          <label for="activity-description" class="block text-sm font-semibold text-surface-200">
+            Descripción de la Actividad *
+          </label>
+          <textarea id="activity-description" required rows="4"
+            placeholder="Describe los objetivos, alcance, entregables esperados y criterios de éxito de esta actividad..."
+            class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 hover:border-surface-600 resize-none"
+            formControlName="descripcion">
+           </textarea>
+          @if (validators.isValidField(activityForm, "descripcion")) {
+          <div
+            class="absolute -top-2 right-3 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
+            <div class="relative flex h-2.5 w-2.5">
+              <div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/70 opacity-80"></div>
+              <div class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary">
+              </div>
+            </div>
+            <span class="text-[11px] font-medium text-accent">
+              {{ validators.getFieldError(activityForm, "descripcion") }}
+            </span>
+          </div>
+          }
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="space-y-3">
+            <label for="activity-order" class="block text-sm font-semibold text-surface-200">
+              Orden de Ejecución
+            </label>
+            <input id="activity-order" type="number"
+              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 hover:border-surface-600"
+              formControlName="orden" />
+            @if (validators.isValidField(activityForm, "orden")) {
+            <div
+              class="absolute -top-2 right-3 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
+              <div class="relative flex h-2.5 w-2.5">
+                <div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/70 opacity-80"></div>
+                <div class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary">
+                </div>
+              </div>
+              <span class="text-[11px] font-medium text-accent">
+                {{ validators.getFieldError(activityForm, "orden") }}
+              </span>
+            </div>
+            }
+          </div>
+
+          <div class="space-y-3">
+            <label for="activity-status" class="block text-sm font-semibold text-surface-200">
+              Estado Inicial
+            </label>
+            <select id="activity-status"
+              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 hover:border-surface-600"
+              formControlName="estado">
+              <option [ngValue]="0" class="bg-surface-800">⏳ Pendiente</option>
+              <option [ngValue]="1" class="bg-surface-800">🔄 En Proceso</option>
+              <option [ngValue]="2" class="bg-surface-800">✅ Completada</option>
+            </select>
+          </div>
+
+          <div class="space-y-3">
+            <label for="activity-priority" class="block text-sm font-semibold text-surface-200">
+              Prioridad
+            </label>
+            <select id="activity-priority"
+              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 hover:border-surface-600"
+              formControlName="prioridad">
+              <option [ngValue]="0" class="bg-surface-800">🟢 Baja</option>
+              <option [ngValue]="1" class="bg-surface-800">🟠 Media</option>
+              <option [ngValue]="2" class="bg-surface-800">🔴 Alta</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="space-y-3">
+            <label for="activity-start-date" class="block text-sm font-semibold text-surface-200">
+              Fecha de Inicio
+            </label>
+            <input id="activity-start-date" type="date"
+              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 hover:border-surface-600"
+              formControlName="fechaInicio" />
+            @if (validators.isValidField(activityForm, "fechaInicio")) {
+            <div
+              class="absolute -top-2 right-3 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
+              <div class="relative flex h-2.5 w-2.5">
+                <div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/70 opacity-80"></div>
+                <div class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary">
+                </div>
+              </div>
+              <span class="text-[11px] font-medium text-accent">
+                {{ validators.getFieldError(activityForm, "fechaInicio") }}
+              </span>
+            </div>
+            }
+          </div>
+
+          <div class="space-y-3">
+            <label for="activity-end-date" class="block text-sm font-semibold text-surface-200">
+              Fecha de Finalización
+            </label>
+            <input id="activity-end-date" type="date"
+              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 hover:border-surface-600"
+              formControlName="fechaFin" />
+            @if (validators.isValidField(activityForm, "fechaFin")) {
+            <div
+              class="absolute -top-2 right-3 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
+              <div class="relative flex h-2.5 w-2.5">
+                <div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/70 opacity-80"></div>
+                <div class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary">
+                </div>
+              </div>
+              <span class="text-[11px] font-medium text-accent">
+                {{ validators.getFieldError(activityForm, "fechaFin") }}
+              </span>
+            </div>
+            }
+          </div>
+        </div>
+
+        <div
+          class="flex flex-col sm:flex-row justify-between pt-8 border-t border-surface-800/50 space-y-4 sm:space-y-0">
+          <a [routerLink]="['/ceo-dashboard']"
+            class="group bg-surface-800/50 backdrop-blur-sm text-surface-300 border border-surface-700/50 py-3.5 px-8 rounded-xl font-medium hover:bg-surface-700/50 hover:text-white transition-all duration-300 text-center hover:scale-[1.02]">
+            <span class="flex items-center justify-center space-x-2">
+              <svg class="w-4 h-4 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+              <span>Cancelar</span>
+            </span>
+          </a>
+
+          <button type="submit"
+            class="group bg-gradient-to-r from-primary via-accent to-secondary text-white py-3.5 px-10 rounded-xl font-semibold hover:shadow-xl hover:shadow-primary/25 transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-0.5">
+            <span class="flex items-center justify-center space-x-2">
+              <svg class="w-5 h-5 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+              <span>Crear Actividad</span>
+            </span>
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</body>

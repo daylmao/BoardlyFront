@@ -1,0 +1,37 @@
+<body class="bg-gradient-to-br from-surface-950 via-surface-900 to-surface-950 min-h-screen font-sans antialiased">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 py-8 min-h-[calc(100vh-4rem)]">
+    <section
+      class="bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 rounded-3xl p-8 shadow-xl shadow-black/20 ring-1 ring-white/5 min-h-[600px]"
+      aria-label="Actividades">
+
+      <app-filter-card [title]="'Actividades'" [projects]="activitiesResource.value()?.totalElementos"
+        [buttonName]="'Crear Actividad'" [buttonRoute]="['new']"></app-filter-card>
+
+      @if (activitiesResource.isLoading()) {
+      <div class="flex justify-center items-center p-12">
+        <app-spinner [title]="'Cargando actividades'" />
+      </div>
+      }
+
+      @else if (!activitiesResource.value()?.elementos?.length) {
+      <div class="flex flex-col items-center justify-center p-12 text-center">
+        <svg class="w-16 h-16 text-surface-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        <h3 class="text-xl font-medium text-surface-300 mb-2">No hay actividades</h3>
+        <p class="text-surface-500 max-w-md">Crea tu primera actividad para comenzar a organizar tu trabajo</p>
+      </div>
+      }
+
+      @else {
+      <div class="grid auto-rows-fr grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-4 mt-8">
+        @for (activity of activitiesResource.value()?.elementos; track activity) {
+        <app-activities-card [activities]="activity" />
+        }
+      </div>
+      }
+
+    </section>
+  </main>
+</body>

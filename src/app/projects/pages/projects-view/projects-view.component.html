@@ -1,0 +1,26 @@
+<body class="bg-gradient-to-br from-surface-950 via-surface-900 to-surface-950 min-h-screen font-sans antialiased">
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+
+    <div
+      class="bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 rounded-3xl p-6 shadow-xl shadow-black/20 ring-1 ring-white/5">
+      <app-filter-card [title]="'Proyectos'" [projects]="projectResource.value()?.totalElementos"
+        [buttonName]="'Crear Proyecto'" [buttonRoute]="[ 'new']" />
+
+      @if (projectResource.isLoading()) {
+      <div class="flex justify-center items-center p-8">
+        <app-spinner [title]="'Cargando'" />
+      </div>
+      }
+
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-6">
+        @for (elementos of projectResource.value()?.elementos; track elementos) {
+        <app-project-card [project]="elementos" />
+
+        }
+
+      </div>
+    </div>
+  </div>
+</body>

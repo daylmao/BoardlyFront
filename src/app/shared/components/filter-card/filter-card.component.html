@@ -1,0 +1,56 @@
+<div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 space-y-4 sm:space-y-0">
+
+  <div class="flex items-center space-x-4">
+    <button (click)="goBack()"
+      class=" cursor-pointer text-surface-300 hover:text-white transition-colors duration-300 flex items-center">
+      <svg class="w-6 h-6 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      <span class="sr-only">Volver</span>
+    </button>
+
+    <h2 class="text-2xl font-bold bg-gradient-to-r from-white to-surface-200 bg-clip-text text-transparent">
+      {{title()}}
+    </h2>
+  </div>
+
+  <div class="flex items-center space-x-2">
+    <a [routerLink]="buttonRoute()" class="group bg-gradient-to-r from-accent via-primary to-secondary text-white py-2.5 px-6 rounded-xl font-semibold
+      hover:shadow-xl hover:shadow-accent/25 transition-all duration-300 flex items-center space-x-2 transform
+      hover:scale-[1.02] hover:-translate-y-0.5">
+      <svg class="w-4 h-4 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor"
+        viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+        </path>
+      </svg>
+      <span>{{buttonName()}}</span>
+    </a>
+    <span
+      class="bg-gradient-to-r from-accent/20 to-accent/10 text-accent px-3 py-1.5 rounded-xl text-sm font-semibold border border-accent/20 ring-1 ring-accent/10">
+      {{projects()}} proyectos activos
+    </span>
+  </div>
+</div>
+
+<div class="flex flex-wrap gap-3">
+  <button
+    class="group bg-gradient-to-r from-primary to-primary/80 text-white px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-primary/25 transform hover:scale-[1.02]">
+    Todos los Proyectos
+  </button>
+  <button
+    class="px-4 py-2 bg-surface-800/40 backdrop-blur-sm text-surface-300 rounded-xl text-sm border border-surface-700/50 hover:bg-surface-700/50 hover:text-white transition-all duration-300 hover:scale-[1.02] ring-1 ring-white/5">
+    Activos
+  </button>
+  <button
+    class="px-4 py-2 bg-surface-800/40 backdrop-blur-sm text-surface-300 rounded-xl text-sm border border-surface-700/50 hover:bg-surface-700/50 hover:text-white transition-all duration-300 hover:scale-[1.02] ring-1 ring-white/5">
+    En Proceso
+  </button>
+  <button
+    class="px-4 py-2 bg-surface-800/40 backdrop-blur-sm text-surface-300 rounded-xl text-sm border border-surface-700/50 hover:bg-surface-700/50 hover:text-white transition-all duration-300 hover:scale-[1.02] ring-1 ring-white/5">
+    Completados
+  </button>
+  <button
+    class="px-4 py-2 bg-surface-800/40 backdrop-blur-sm text-surface-300 rounded-xl text-sm border border-surface-700/50 hover:bg-surface-700/50 hover:text-white transition-all duration-300 hover:scale-[1.02] ring-1 ring-white/5">
+    Pausados
+  </button>
+</div>

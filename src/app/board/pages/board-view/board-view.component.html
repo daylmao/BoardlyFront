@@ -1,8 +1,7 @@
-<body class="bg-gradient-to-br from-surface-950 via-surface-900 to-surface-950 min-h-screen font-sans antialiased">
-
-
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
-    <!-- Project Info -->
+<div class="bg-gradient-to-br from-surface-950 via-surface-900 to-surface-950 min-h-screen font-sans antialiased p-6">
+  <!-- Contenedor principal con márgenes y sombra -->
+  <div class="max-w-7xl mx-auto">
+    <!-- Header del tablero -->
     <div
       class="bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 rounded-3xl p-6 mb-8 shadow-xl shadow-black/10 ring-1 ring-white/5">
       <div class="flex items-center justify-between mb-4">
@@ -24,148 +23,236 @@
           <div class="bg-warning/20 text-warning px-4 py-2 rounded-xl text-sm font-semibold ring-1 ring-warning/20">
             🔄 En Proceso
           </div>
-
+          <div class="text-surface-400 text-sm">
+            <div class="flex items-center space-x-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span>Actualizado hace 2 horas</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Kanban Board -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="mb-8 flex items-center justify-between">
+      <div>
+        <h1 class="text-2xl font-bold text-white">Tablero Kanban</h1>
+        <p class="text-surface-400 text-sm mt-1">Organiza y gestiona tus tareas eficientemente</p>
+      </div>
+      <div class="flex items-center space-x-4">
+        <a
+          class="cursor-pointer group bg-gradient-to-r from-accent via-primary to-secondary text-white py-2.5 px-6 rounded-xl font-semibold hover:shadow-xl hover:shadow-accent/25 transition-all duration-300 flex items-center space-x-2 transform hover:scale-[1.02] hover:-translate-y-0.5">
+          <svg class="w-4 h-4 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+          </svg>
+          <a [routerLink]="['new']">Nueva Tarea</a>
+        </a>
+      </div>
+    </div>
+
+    <div cdkDropListGroup class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
       <!-- Pendiente Column -->
       <div
-        class="bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 rounded-2xl overflow-hidden shadow-xl shadow-black/10 ring-1 ring-white/5">
-        <div class="bg-surface-800/50 p-4 border-b border-surface-700/50">
+        class="bg-surface-900/80 backdrop-blur-xl border border-surface-800/50 rounded-xl overflow-hidden shadow-2xl shadow-black/20">
+        <div class="bg-surface-800/70 p-4 border-b border-surface-700/50">
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-3">
-              <div class="w-3 h-3 bg-surface-400 rounded-full"></div>
+              <div class="w-3 h-3 bg-surface-400 rounded-full animate-pulse"></div>
               <h3 class="font-semibold text-white">Pendiente</h3>
             </div>
-            <span class="bg-surface-700/50 text-surface-300 px-3 py-1 rounded-lg text-xs font-medium">2</span>
+            <span class="bg-surface-700/50 text-surface-300 px-3 py-1 rounded-lg text-xs font-medium">
+              {{ pendienteTasks().length }}
+            </span>
           </div>
         </div>
 
-        <div class="p-4 space-y-4 min-h-[400px]">
-          <!-- Task Card 1 -->
-          <div
-            class="group bg-surface-800/40 border border-surface-700/50 rounded-xl p-4 hover:bg-surface-800/60 hover:border-surface-600 transition-all duration-300 cursor-pointer transform hover:scale-[1.02] hover:-translate-y-1">
+        <div cdkDropList [id]="COLUMN_IDS.PENDIENTE" [cdkDropListData]="pendienteTasks()"
+          (cdkDropListDropped)="drop($event)" class="p-4 space-y-4 min-h-[400px]">
+          @for (task of pendienteTasks(); track task.tareaId) {
+          <div cdkDrag class="group bg-surface-800/60 border border-surface-700/50 rounded-lg p-4">
             <div class="flex items-start justify-between mb-3">
-              <h4 class="font-medium text-white group-hover:text-accent transition-colors">Diseñar interfaz de login
-              </h4>
+              <h4 class="font-medium text-white">{{task.titulo}}</h4>
             </div>
-
-            <p class="text-surface-400 text-sm mb-4 line-clamp-2">Crear mockups y prototipos para la interfaz de
-              autenticación...</p>
-
+            <p class="text-surface-400 text-sm mb-4 line-clamp-2">{{task.descripcion}}</p>
             <div class="flex items-center justify-between text-xs mb-3">
               <div class="flex items-center space-x-2">
                 <svg class="w-3 h-3 text-surface-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                <span class="text-surface-400">Vence: 20 Ene</span>
+                <span class="text-surface-400">Vence: {{task.fechaVencimiento | date}}</span>
               </div>
-              <span class="bg-warning/20 text-warning px-2 py-1 rounded text-xs">🟡 Media</span>
-            </div>
-
-            <div class="flex items-center justify-between">
-              <div class="flex -space-x-2">
-                <div
-                  class="w-6 h-6 bg-gradient-to-br from-accent to-secondary rounded-full flex items-center justify-center text-white text-xs font-bold ring-2 ring-surface-800">
-                  ME
-                </div>
-              </div>
-              <div class="text-xs text-surface-400">María Elena</div>
             </div>
           </div>
-
+          } @empty {
+          <div class="flex flex-col items-center justify-center h-full text-center py-8">
+            <p class="text-surface-400 text-sm font-medium">No hay tareas pendientes</p>
+          </div>
+          }
         </div>
       </div>
 
       <!-- En Proceso Column -->
       <div
-        class="bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 rounded-2xl overflow-hidden shadow-xl shadow-black/10 ring-1 ring-white/5">
+        class="bg-surface-900/80 backdrop-blur-xl border border-surface-800/50 rounded-xl overflow-hidden shadow-2xl shadow-black/20">
         <div class="bg-warning/10 p-4 border-b border-warning/20">
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-3">
-              <div class="w-3 h-3 bg-warning rounded-full"></div>
+              <div class="w-3 h-3 bg-warning rounded-full animate-pulse"></div>
               <h3 class="font-semibold text-white">En Proceso</h3>
             </div>
-            <span class="bg-warning/20 text-warning px-3 py-1 rounded-lg text-xs font-medium">0</span>
+            <span class="bg-warning/20 text-warning px-3 py-1 rounded-lg text-xs font-medium">
+              {{ enProcesoTasks().length }}
+            </span>
           </div>
         </div>
-        <div class="p-4 space-y-3 min-h-[400px]">
-          <!-- Empty state -->
-          <div class="flex flex-col items-center justify-center h-full text-center">
-            <div class="w-16 h-16 bg-secondary/10 rounded-2xl flex items-center justify-center mb-4">
-              <svg class="w-8 h-8 text-secondary/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div cdkDropList [id]="COLUMN_IDS.EN_PROCESO" [cdkDropListData]="enProcesoTasks()"
+          (cdkDropListDropped)="drop($event)" class="p-4 space-y-4 min-h-[400px]">
+          @for (task of enProcesoTasks(); track task.tareaId) {
+          <div cdkDrag
+            class="group bg-surface-800/60 border border-surface-700/50 rounded-lg p-4 hover:bg-surface-800/80 hover:border-surface-600 transition-all duration-200 cursor-pointer transform hover:scale-[1.01] hover:-translate-y-0.5 shadow-lg shadow-black/5">
+            <div class="flex items-start justify-between mb-3">
+              <h4 class="font-medium text-white group-hover:text-accent transition-colors">{{task.titulo}}</h4>
+              <button class="text-surface-500 hover:text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+            </div>
+            <p class="text-surface-400 text-sm mb-4 line-clamp-2">{{task.descripcion}}</p>
+            <div class="flex items-center justify-between text-xs mb-3">
+              <div class="flex items-center space-x-2">
+                <svg class="w-3 h-3 text-surface-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="text-surface-400">Vence: {{task.fechaVencimiento | date}}</span>
+              </div>
+            </div>
+          </div>
+          } @empty {
+          <div class="flex flex-col items-center justify-center h-full text-center py-8">
+            <div class="w-14 h-14 bg-surface-800/50 rounded-xl flex items-center justify-center mb-3">
+              <svg class="w-6 h-6 text-surface-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
             </div>
-            <p class="text-surface-500 text-sm font-medium">No hay tareas en proceso</p>
-            <p class="text-surface-600 text-xs mt-1">Las tareas aparecerán aquí cuando esten en proceso</p>
+            <p class="text-surface-400 text-sm font-medium">No hay tareas en proceso</p>
+            <p class="text-surface-500 text-xs mt-1">Las tareas aparecerán aquí cuando estén en proceso</p>
           </div>
+          }
         </div>
-
       </div>
 
       <!-- En Revisión Column -->
       <div
-        class="bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 rounded-2xl overflow-hidden shadow-xl shadow-black/10 ring-1 ring-white/5">
+        class="bg-surface-900/80 backdrop-blur-xl border border-surface-800/50 rounded-xl overflow-hidden shadow-2xl shadow-black/20">
         <div class="bg-secondary/10 p-4 border-b border-secondary/20">
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-3">
-              <div class="w-3 h-3 bg-secondary rounded-full"></div>
+              <div class="w-3 h-3 bg-secondary rounded-full animate-pulse"></div>
               <h3 class="font-semibold text-white">En Revisión</h3>
             </div>
-            <span class="bg-secondary/20 text-secondary px-3 py-1 rounded-lg text-xs font-medium">0</span>
+            <span class="bg-secondary/20 text-secondary px-3 py-1 rounded-lg text-xs font-medium">
+              {{ enRevisionTasks().length }}
+            </span>
           </div>
         </div>
-
-        <div class="p-4 space-y-3 min-h-[400px]">
-          <!-- Empty state -->
-          <div class="flex flex-col items-center justify-center h-full text-center">
-            <div class="w-16 h-16 bg-secondary/10 rounded-2xl flex items-center justify-center mb-4">
-              <svg class="w-8 h-8 text-secondary/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div cdkDropList [id]="COLUMN_IDS.EN_REVISION" [cdkDropListData]="enRevisionTasks()"
+          (cdkDropListDropped)="drop($event)" class="p-4 space-y-4 min-h-[400px]">
+          @for (task of enRevisionTasks(); track task.tareaId) {
+          <div cdkDrag
+            class="group bg-surface-800/60 border border-surface-700/50 rounded-lg p-4 hover:bg-surface-800/80 hover:border-surface-600 transition-all duration-200 cursor-pointer transform hover:scale-[1.01] hover:-translate-y-0.5 shadow-lg shadow-black/5">
+            <div class="flex items-start justify-between mb-3">
+              <h4 class="font-medium text-white group-hover:text-accent transition-colors">{{task.titulo}}</h4>
+              <button class="text-surface-500 hover:text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+            </div>
+            <p class="text-surface-400 text-sm mb-4 line-clamp-2">{{task.descripcion}}</p>
+            <div class="flex items-center justify-between text-xs mb-3">
+              <div class="flex items-center space-x-2">
+                <svg class="w-3 h-3 text-surface-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="text-surface-400">Vence: {{task.fechaVencimiento | date}}</span>
+              </div>
+            </div>
+          </div>
+          } @empty {
+          <div class="flex flex-col items-center justify-center h-full text-center py-8">
+            <div class="w-14 h-14 bg-surface-800/50 rounded-xl flex items-center justify-center mb-3">
+              <svg class="w-6 h-6 text-surface-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
             </div>
-            <p class="text-surface-500 text-sm font-medium">No hay tareas en revisión</p>
-            <p class="text-surface-600 text-xs mt-1">Las tareas aparecerán aquí cuando estén listas para revisar</p>
+            <p class="text-surface-400 text-sm font-medium">No hay tareas en revisión</p>
+            <p class="text-surface-500 text-xs mt-1">Las tareas aparecerán aquí cuando estén listas para revisar</p>
           </div>
+          }
         </div>
       </div>
 
       <!-- Finalizada Column -->
       <div
-        class="bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 rounded-2xl overflow-hidden shadow-xl shadow-black/10 ring-1 ring-white/5">
+        class="bg-surface-900/80 backdrop-blur-xl border border-surface-800/50 rounded-xl overflow-hidden shadow-2xl shadow-black/20">
         <div class="bg-accent/10 p-4 border-b border-accent/20">
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-3">
-              <div class="w-3 h-3 bg-accent rounded-full"></div>
+              <div class="w-3 h-3 bg-accent rounded-full animate-pulse"></div>
               <h3 class="font-semibold text-white">Finalizada</h3>
             </div>
-            <span class="bg-accent/20 text-accent px-3 py-1 rounded-lg text-xs font-medium">0</span>
+            <span class="bg-accent/20 text-accent px-3 py-1 rounded-lg text-xs font-medium">
+              {{ finalizadaTasks().length }}
+            </span>
           </div>
         </div>
-        <div class="p-4 space-y-3 min-h-[400px]">
-          <!-- Empty state -->
-          <div class="flex flex-col items-center justify-center h-full text-center">
-            <div class="w-16 h-16 bg-secondary/10 rounded-2xl flex items-center justify-center mb-4">
-              <svg class="w-8 h-8 text-secondary/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div cdkDropList [id]="COLUMN_IDS.FINALIZADA" [cdkDropListData]="finalizadaTasks()"
+          (cdkDropListDropped)="drop($event)" class="p-4 space-y-4 min-h-[400px]">
+          @for (task of finalizadaTasks(); track task.tareaId) {
+          <div cdkDrag
+            class="group bg-surface-800/60 border border-surface-700/50 rounded-lg p-4 hover:bg-surface-800/80 hover:border-surface-600 transition-all duration-200 cursor-pointer transform hover:scale-[1.01] hover:-translate-y-0.5 shadow-lg shadow-black/5">
+            <div class="flex items-start justify-between mb-3">
+              <h4 class="font-medium text-white group-hover:text-accent transition-colors">{{task.titulo}}</h4>
+              <button class="text-surface-500 hover:text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+            </div>
+            <p class="text-surface-400 text-sm mb-4 line-clamp-2">{{task.descripcion}}</p>
+            <div class="flex items-center justify-between text-xs mb-3">
+              <div class="flex items-center space-x-2">
+                <svg class="w-3 h-3 text-surface-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="text-surface-400">Vence: {{task.fechaVencimiento | date}}</span>
+              </div>
+            </div>
+          </div>
+          } @empty {
+          <div class="flex flex-col items-center justify-center h-full text-center py-8">
+            <div class="w-14 h-14 bg-surface-800/50 rounded-xl flex items-center justify-center mb-3">
+              <svg class="w-6 h-6 text-surface-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                   d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
             </div>
-            <p class="text-surface-500 text-sm font-medium">No hay tareas finalizadas</p>
-            <p class="text-surface-600 text-xs mt-1">Las tareas aparecerán aquí cuando ya se hayan finalizado</p>
+            <p class="text-surface-400 text-sm font-medium">No hay tareas finalizadas</p>
+            <p class="text-surface-500 text-xs mt-1">Las tareas aparecerán aquí cuando ya se hayan finalizado</p>
           </div>
+          }
         </div>
-
       </div>
     </div>
-
-
   </div>
-</body>
+</div>

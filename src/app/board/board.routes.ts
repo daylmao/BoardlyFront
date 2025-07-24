@@ -10,6 +10,11 @@ export const boardRoutes: Routes = [
         path: '',
         loadComponent: () => import('./pages/board-view/board-view.component'),
       },
+      {
+        path: 'new',
+        loadComponent: () =>
+          import('./pages/create-task/create-task.component'),
+      },
     ],
   },
 ];

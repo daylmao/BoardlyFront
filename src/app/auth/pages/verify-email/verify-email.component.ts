@@ -48,23 +48,27 @@ export default class VerifyEmailComponent {
     this.loading.set(true);
     const code = this.verifyEmailForm.get('code')?.value;
 
-    this.loading.set(true);
-
     this.auth
       .confirmAccount(this.userId, code!)
       .pipe(
-        switchMap(() =>
-          this.empresaId
-            ? this.auth.giveEmployeeRol({
-                usuarioId: this.userId,
-                empresaId: this.empresaId,
-              })
-            : this.auth.giveCeoRol(this.userId)
-        ),
+        switchMap(() => {
+          if (this.empresaId) {
+            return this.auth.giveEmployeeRol({
+              usuarioId: this.userId,
+              empresaId: this.empresaId,
+            });
+          } else {
+            return this.auth.giveCeoRol(this.userId);
+          }
+        }),
         tap(() => this.router.navigateByUrl('/auth/success-register')),
         finalize(() => this.loading.set(false))
       )
-      .subscribe();
+      .subscribe({
+        error: (err) => {
+          console.error('Error during verification:', err);
+        },
+      });
   }
 
   goBack() {

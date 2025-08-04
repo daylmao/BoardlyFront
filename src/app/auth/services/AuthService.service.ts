@@ -24,11 +24,14 @@ export class AuthService {
   //   return this._user()?.roles.includes(role) ?? false;
   // }
 
-  hasRole(role: UserRole): boolean {
+  hasRole(role: UserRole | UserRole[]): boolean {
     const user = this._user();
     if (!user || !user.roles) return false;
 
-    return user.roles === role;
+    const userRoles = Array.isArray(user.roles) ? user.roles : [user.roles];
+    const rolesToCheck = Array.isArray(role) ? role : [role];
+
+    return userRoles.some((r) => rolesToCheck.includes(r));
   }
 
   login(Correo: string, Contrasena: string): Observable<boolean> {
@@ -102,6 +105,7 @@ export class AuthService {
       email: payload.email,
       roles: payload.roles,
       ceoId: payload.ceoId,
+      empleadoId: payload.empleadoId,
     });
 
     return true;

@@ -1,7 +1,7 @@
 <body class="bg-gradient-to-br from-surface-950 via-surface-900 to-surface-950 min-h-screen font-sans antialiased">
 
   <div class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
-    <!-- New Task Form -->
+
     <div
       class="bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 rounded-3xl p-8 shadow-2xl shadow-black/20 ring-1 ring-white/5">
       <div class="flex items-center space-x-4 mb-8">
@@ -19,29 +19,20 @@
         </div>
       </div>
 
-      <form class="space-y-8">
-        <!-- Basic Information -->
+      <form class="space-y-8" [formGroup]="createTaskForm" (ngSubmit)="onSubmit()">
+
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div class="space-y-3">
             <label for="taskTitle" class="block text-sm font-semibold text-surface-200">
               Título de la Tarea *
             </label>
-            <input id="taskTitle" name="taskTitle" type="text" required placeholder="Ej: Implementar autenticación JWT"
-              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent/50 transition-all duration-300 hover:border-surface-600">
+            <input id="Titulo" name="Titulo" type="text" required placeholder="Ej: Implementar autenticación JWT"
+              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent/50 transition-all duration-300 hover:border-surface-600"
+              formControlName="Titulo">
           </div>
 
-          <div class="space-y-3">
-            <label for="taskPriority" class="block text-sm font-semibold text-surface-200">
-              Prioridad *
-            </label>
-            <select id="taskPriority" name="taskPriority" required
-              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent/50 transition-all duration-300 hover:border-surface-600">
-              <option value="low" class="bg-surface-800">🟢 Baja</option>
-              <option value="medium" selected class="bg-surface-800">🟡 Media</option>
-              <option value="high" class="bg-surface-800">🟠 Alta</option>
-            </select>
-          </div>
         </div>
+
 
         <div class="space-y-3">
           <label for="taskDescription" class="block text-sm font-semibold text-surface-200">
@@ -49,104 +40,105 @@
           </label>
           <textarea id="taskDescription" name="taskDescription" required rows="4"
             placeholder="Describe los detalles, requerimientos y criterios de aceptación de esta tarea..."
-            class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent/50 transition-all duration-300 hover:border-surface-600 resize-none"></textarea>
+            class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent/50 transition-all duration-300 hover:border-surface-600 resize-none"
+            formControlName="Descripcion"></textarea>
         </div>
 
-        <!-- Task Details -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div class="space-y-3">
-            <label for="taskStatus" class="block text-sm font-semibold text-surface-200">
-              Estado Inicial
-            </label>
-            <select id="taskStatus" name="taskStatus"
-              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent/50 transition-all duration-300 hover:border-surface-600">
-              <option value="pending" selected class="bg-surface-800">⏳ Pendiente</option>
-              <option value="in-progress" class="bg-surface-800">🔄 En Proceso</option>
-              <option value="in-review" class="bg-surface-800">👀 En Revisión</option>
-              <option value="completed" class="bg-surface-800">✅ Completada</option>
-            </select>
-          </div>
-
-
-        </div>
-
-        <!-- Dates -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div class="space-y-3">
-            <label for="startDate" class="block text-sm font-semibold text-surface-200">
+            <label for="FechaInicio" class="block text-sm font-semibold text-surface-200">
               Fecha de Inicio
             </label>
-            <input id="startDate" name="startDate" type="date"
-              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent/50 transition-all duration-300 hover:border-surface-600">
+            <input id="FechaInicio" name="startDate" type="date"
+              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent/50 transition-all duration-300 hover:border-surface-600"
+              formControlName="FechaInicio">
           </div>
 
           <div class="space-y-3">
-            <label for="dueDate" class="block text-sm font-semibold text-surface-200">
+            <label for="fechaVencimiento" class="block text-sm font-semibold text-surface-200">
               Fecha de Vencimiento
             </label>
-            <input id="dueDate" name="dueDate" type="date"
-              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent/50 transition-all duration-300 hover:border-surface-600">
+            <input id="FechaVencimiento" name="fechaVencimiento" type="date"
+              class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent/50 transition-all duration-300 hover:border-surface-600"
+              formControlName="FechaVencimiento">
           </div>
         </div>
 
-        <!-- Assigned Users -->
-        <div class="space-y-4">
-          <label class="block text-sm font-semibold text-surface-200">
-            Asignar Responsables
-          </label>
+        <div class="space-y-6">
+
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-accent/10 rounded-lg flex items-center justify-center ring-1 ring-accent/20">
+              <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+              </svg>
+            </div>
+            <label
+              class="text-base font-semibold bg-gradient-to-r from-white to-surface-200 bg-clip-text text-transparent">
+              Asignar Responsables
+            </label>
+          </div>
+
+
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            @for (employee of employeeResource.value()?.elementos; track employee.empleadoId) {
             <label class="group cursor-pointer">
-              <div
-                class="flex items-center space-x-3 bg-surface-800/30 backdrop-blur-sm border border-surface-700/50 rounded-xl p-4 transition-all duration-300 hover:bg-surface-800/50 hover:border-surface-600 group-hover:scale-[1.02]">
-                <div
-                  class="w-10 h-10 bg-gradient-to-br from-accent to-secondary rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg">
-                  ME
-                </div>
-                <div class="flex-1">
-                  <p class="text-white font-medium">María Elena</p>
-                  <p class="text-surface-400 text-sm">Frontend Developer</p>
-                </div>
-                <input type="checkbox"
-                  class="h-5 w-5 text-accent rounded border-surface-600 focus:ring-accent focus:ring-2 transition-all duration-200">
-              </div>
-            </label>
+              <div class="relative bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 rounded-xl p-4
+                          transition-all duration-300 hover:border-accent/40 hover:bg-surface-800/70 hover:shadow-lg
+                          hover:shadow-accent/5 overflow-hidden">
 
-            <label class="group cursor-pointer">
-              <div
-                class="flex items-center space-x-3 bg-surface-800/30 backdrop-blur-sm border border-surface-700/50 rounded-xl p-4 transition-all duration-300 hover:bg-surface-800/50 hover:border-surface-600 group-hover:scale-[1.02]">
-                <div
-                  class="w-10 h-10 bg-gradient-to-br from-primary to-secondary rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg">
-                  CM
-                </div>
-                <div class="flex-1">
-                  <p class="text-white font-medium">Carlos Mendoza</p>
-                  <p class="text-surface-400 text-sm">Backend Developer</p>
-                </div>
-                <input type="checkbox"
-                  class="h-5 w-5 text-accent rounded border-surface-600 focus:ring-accent focus:ring-2 transition-all duration-200">
-              </div>
-            </label>
 
-            <label class="group cursor-pointer">
-              <div
-                class="flex items-center space-x-3 bg-surface-800/30 backdrop-blur-sm border border-surface-700/50 rounded-xl p-4 transition-all duration-300 hover:bg-surface-800/50 hover:border-surface-600 group-hover:scale-[1.02]">
-                <div
-                  class="w-10 h-10 bg-gradient-to-br from-secondary to-accent rounded-full flex items-center justify-center text-white text-sm font-bold shadow-lg">
-                  AG
+                <div class="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500
+                            pointer-events-none overflow-hidden">
+                  <div class="absolute -top-10 -right-10 w-32 h-32 bg-accent/5 rounded-full blur-xl"></div>
                 </div>
-                <div class="flex-1">
-                  <p class="text-white font-medium">Ana García</p>
-                  <p class="text-surface-400 text-sm">Project Lead</p>
+
+                <div class="flex items-center gap-4 relative z-10">
+
+                  <div class="relative flex-shrink-0">
+                    <img [src]="employee.fotoPerfil" class="w-12 h-12 rounded-full border-2 border-surface-800 bg-surface-700 object-cover
+                                hover:scale-105 transition-transform duration-300 group-hover:border-accent/50"
+                      [alt]="'Avatar de ' + employee.nombreCompleto">
+                    <div
+                      class="absolute -bottom-1 -right-1 w-5 h-5 bg-surface-700 rounded-full border-2 border-surface-800
+                                flex items-center justify-center transition-all duration-300 group-has-[input:checked]:bg-accent">
+                      <svg
+                        class="w-3 h-3 text-white opacity-0 group-has-[input:checked]:opacity-100 transition-opacity duration-200"
+                        fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                  </div>
+
+
+                  <div class="flex-1 min-w-0">
+                    <p class="text-white font-medium truncate group-hover:text-accent transition-colors duration-200">
+                      {{ employee.nombreCompleto }}
+                    </p>
+                    <p
+                      class="text-surface-400 text-sm truncate group-hover:text-surface-300 transition-colors duration-200">
+                      {{ employee.posicion }}
+                    </p>
+                  </div>
+
+
+                  <input type="checkbox" [checked]="selectedEmployees.has(employee.empleadoId)"
+                    (change)="toggleEmployeeSelection(employee.empleadoId)" class="absolute opacity-0 -z-10 peer">
+                  <div class="w-5 h-5 rounded border-2 border-surface-600 flex items-center justify-center
+                              transition-all duration-200 group-hover:border-accent
+                              peer-checked:bg-accent peer-checked:border-accent">
+                    <svg class="w-3 h-3 text-white opacity-0 peer-checked:opacity-100 transition-opacity duration-200"
+                      fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
                 </div>
-                <input type="checkbox"
-                  class="h-5 w-5 text-accent rounded border-surface-600 focus:ring-accent focus:ring-2 transition-all duration-200">
               </div>
             </label>
+            }
           </div>
         </div>
 
-        <!-- Attachments -->
-        <div class="space-y-4">
+        <!-- <div class="space-y-4">
           <label class="block text-sm font-semibold text-surface-200">
             Archivos Adjuntos
           </label>
@@ -164,16 +156,15 @@
                 </p>
                 <p class="text-xs text-surface-500">PDF, DOC, XLS, JPG, PNG (MAX. 10MB)</p>
               </div>
-              <input id="dropzone-file" type="file" class="hidden" multiple>
+              <input id="dropzone-file" type="file" class="hidden" multiple (change)="onFileChange($event)">
             </label>
           </div>
-        </div>
+        </div> -->
 
-        <!-- Action Buttons -->
         <div
           class="flex flex-col sm:flex-row justify-between pt-8 border-t border-surface-800/50 space-y-4 sm:space-y-0">
-          <a href="activity-with-task.html"
-            class="group bg-surface-800/50 backdrop-blur-sm text-surface-300 border border-surface-700/50 py-3.5 px-8 rounded-xl font-medium hover:bg-surface-700/50 hover:text-white transition-all duration-300 text-center hover:scale-[1.02]">
+          <div (click)="goBack()"
+            class="group cursor-pointer bg-surface-800/50 backdrop-blur-sm text-surface-300 border border-surface-700/50 py-3.5 px-8 rounded-xl font-medium hover:bg-surface-700/50 hover:text-white transition-all duration-300 text-center hover:scale-[1.02]">
             <span class="flex items-center justify-center space-x-2">
               <svg class="w-4 h-4 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor"
                 viewBox="0 0 24 24">
@@ -181,9 +172,9 @@
               </svg>
               <span>Cancelar</span>
             </span>
-          </a>
+          </div>
           <button type="submit"
-            class="group bg-gradient-to-r from-accent via-primary to-secondary text-white py-3.5 px-10 rounded-xl font-semibold hover:shadow-xl hover:shadow-accent/25 transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-0.5">
+            class="cursor-pointer group bg-gradient-to-r from-accent via-primary to-secondary text-white py-3.5 px-10 rounded-xl font-semibold hover:shadow-xl hover:shadow-accent/25 transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-0.5">
             <span class="flex items-center justify-center space-x-2">
               <svg class="w-5 h-5 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor"
                 viewBox="0 0 24 24">
@@ -194,7 +185,9 @@
             </span>
           </button>
         </div>
+
       </form>
+
     </div>
   </div>
 </body>

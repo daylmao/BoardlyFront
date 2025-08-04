@@ -17,6 +17,11 @@ import { SignalRService } from '../../services/signalr.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { ActivitiesService } from '../../../activities/services/activities.service';
+import CreateTaskComponent from '../create-task/create-task.component';
+import { BoardService } from '../../services/board.service';
+import { toast } from 'ngx-sonner';
 
 type ColumnId = 'pendiente' | 'en-proceso' | 'en-revision' | 'finalizada';
 
@@ -28,7 +33,9 @@ type ColumnId = 'pendiente' | 'en-proceso' | 'en-revision' | 'finalizada';
 })
 export default class BoardViewComponent {
   private signalRService = inject(SignalRService);
+  private boardService = inject(BoardService);
   private route = inject(ActivatedRoute);
+  private activityService = inject(ActivitiesService);
   private subscriptions: Subscription[] = [];
 
   readonly STATUS_MAP: Record<ColumnId, TaskStatus> = {
@@ -59,9 +66,17 @@ export default class BoardViewComponent {
   finalizadaTasks = computed(() => this.filterTasksByStatus('Finalizada'));
   activityId = this.route.snapshot.params['activityId'];
 
+  activityResource = rxResource({
+    request: () => ({ activityId: this.activityId }),
+    loader: ({ request }) => {
+      return this.activityService.getActivities(request.activityId);
+    },
+  });
+  showModal = signal(false);
+
   ngOnInit() {
     const connectionSub = this.signalRService
-      .startConnection(this.activityId, 1, 3)
+      .startConnection(this.activityId, 1, 100)
       .subscribe({
         next: (connected) => {
           if (connected) {
@@ -69,6 +84,9 @@ export default class BoardViewComponent {
               this.signalRService.tareasPaginadas$.subscribe((tareas) => {
                 this.tasks.set(tareas);
                 console.log('Tareas recibidas:', tareas);
+              }),
+              this.signalRService.tareaEnPendiente$.subscribe((tareaId) => {
+                this.updateLocalTaskStatus(tareaId, 'Pendiente');
               }),
 
               this.signalRService.tareaEnProceso$.subscribe((tareaId) => {
@@ -123,6 +141,9 @@ export default class BoardViewComponent {
       this.updateLocalTaskStatus(task.tareaId, newStatus);
 
       switch (newStatus) {
+        case 'Pendiente':
+          this.signalRService.marcarEnPendiente(task.tareaId);
+          break;
         case 'EnProceso':
           this.signalRService.marcarEnProceso(task.tareaId);
           break;
@@ -138,21 +159,17 @@ export default class BoardViewComponent {
     }
   }
 
-  getInitials(name: string): string {
-    if (!name) return '';
-    return name
-      .split(' ')
-      .filter((part) => part.length > 0)
-      .map((n) => n[0])
-      .join('')
-      .toUpperCase();
-  }
-
   getColumnIdByStatus(status: TaskStatus): ColumnId {
     return this.REVERSE_STATUS_MAP[status];
   }
 
   ngOnDestroy() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+  deleteTask(taskId: string) {
+    console.log(taskId);
+    this.boardService.deleteTask(taskId).subscribe(() => {
+      toast.success('Tarea eliminada exitosamente');
+    });
   }
 }

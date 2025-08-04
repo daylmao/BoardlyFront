@@ -9,6 +9,10 @@ export interface Task {
   fechaActualizacion?: Date | null;
   fechaCreado: Date;
   actividadId: string;
+  usuarioFotoPerfil: Array<{
+    fotoPerfil: string;
+    usuarioId: string;
+  }>;
 }
 
 export type TaskStatus =

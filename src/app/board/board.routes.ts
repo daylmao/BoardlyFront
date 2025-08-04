@@ -15,6 +15,16 @@ export const boardRoutes: Routes = [
         loadComponent: () =>
           import('./pages/create-task/create-task.component'),
       },
+
+      {
+        path: ':id/view',
+        loadComponent: () => import('./pages/task-view/task-view.component'),
+      },
+      {
+        path: ':id/update',
+        loadComponent: () =>
+          import('./pages/update-task/update-task.component'),
+      },
     ],
   },
 ];

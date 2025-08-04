@@ -6,15 +6,15 @@ import { Subject, Observable } from 'rxjs';
 export class SignalRService {
   private hubConnection?: signalR.HubConnection;
 
-  // Subject para las tareas paginadas
   private tareasPaginadasSubject = new Subject<any>();
   public tareasPaginadas$ = this.tareasPaginadasSubject.asObservable();
 
-  // Subjects para actualizaciones de estado
+  private tareaPendienteSubject = new Subject<string>();
   private tareaEnProcesoSubject = new Subject<string>();
   private tareaEnRevisionSubject = new Subject<string>();
   private tareaFinalizadaSubject = new Subject<string>();
 
+  public tareaEnPendiente$ = this.tareaEnProcesoSubject.asObservable();
   public tareaEnProceso$ = this.tareaEnProcesoSubject.asObservable();
   public tareaEnRevision$ = this.tareaEnRevisionSubject.asObservable();
   public tareaFinalizada$ = this.tareaFinalizadaSubject.asObservable();
@@ -38,9 +38,12 @@ export class SignalRService {
       .withAutomaticReconnect()
       .build();
 
-    // Configurar handlers
     this.hubConnection.on('RecibirTareasPaginadas', (tareas) => {
       this.tareasPaginadasSubject.next(tareas);
+    });
+
+    this.hubConnection.on('RecibirTareaEnPendiente', (tareaId) => {
+      this.tareaFinalizadaSubject.next(tareaId);
     });
 
     this.hubConnection.on('RecibirTareaEnProceso', (tareaId) => {
@@ -67,8 +70,10 @@ export class SignalRService {
         });
     });
   }
+  marcarEnPendiente(tareaId: string) {
+    this.hubConnection?.send('MarcarEnPendiente', tareaId);
+  }
 
-  // Métodos para cambiar estado
   marcarEnProceso(tareaId: string) {
     this.hubConnection?.send('MarcarEnProceso', tareaId);
   }

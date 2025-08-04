@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { CeoDashboardCounts } from '../../Interfaces/CeoDashboardCounts.interface';
 
 @Component({
   selector: 'app-ceo-stats',
@@ -6,4 +7,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './ceo-stats.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CeoStatsComponent {}
+export class CeoStatsComponent {
+  ceoStats = input.required<CeoDashboardCounts>();
+}

@@ -14,22 +14,20 @@ export const employeeRoutes: Routes = [
             '../employee-dashboard/pages/employee-profile/employee-profile.component'
           ),
       },
-
       {
-        path: '**',
-        redirectTo: '',
+        path: ':projectId/activities',
+        loadChildren: () => import('../activities/activities.routes'),
       },
 
       {
         path: '',
         loadComponent: () => import('./pages/dashboard/dashboard.component'),
       },
+      {
+        path: '**',
+        redirectTo: '',
+      },
     ],
-  },
-
-  {
-    path: '**',
-    redirectTo: '',
   },
 ];
 

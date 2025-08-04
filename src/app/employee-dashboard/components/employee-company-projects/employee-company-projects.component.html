@@ -1,0 +1,134 @@
+<div class="p-8">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+    @if (projectId) {
+
+
+    <div
+      class="group bg-surface-800/50 backdrop-blur-sm border border-primary/30 rounded-2xl p-6 hover:bg-surface-800/70 hover:border-surface-600 transition-all duration-300 cursor-pointer transform hover:scale-[1.02] hover:-translate-y-1 relative block shadow-lg shadow-black/10 ring-1 ring-white/5"
+      [routerLink]="[project()?.proyectoEmpresa?.proyectoId, 'activities']">
+
+
+      <div class="absolute top-4 right-4 z-20">
+        <div class="relative group/rol">
+          <div class="bg-gradient-to-r from-primary/20 to-primary/10 text-primary px-3 py-1.5 rounded-xl flex items-center space-x-2
+                        border border-primary/30 ring-1 ring-primary/10 backdrop-blur-sm
+                        transition-all duration-300 hover:from-primary/30 hover:to-primary/20 hover:border-primary/40
+                        shadow-md hover:shadow-primary/20">
+
+            <span class="text-xs font-semibold tracking-tight">{{project()?.rol}}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-start justify-between mb-6 pr-24">
+        <div class="flex items-center space-x-4">
+          <div
+            class="w-12 h-12 bg-gradient-to-br from-accent/20 to-accent/10 rounded-2xl flex items-center justify-center ring-1 ring-accent/20">
+            <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+            </svg>
+          </div>
+          <div>
+            <h3
+              class="text-lg font-bold bg-gradient-to-r from-white to-surface-200 bg-clip-text text-transparent group-hover:from-accent group-hover:to-accent transition-all duration-300">
+              {{project()?.proyectoEmpresa?.nombre}}</h3>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-surface-300 text-sm mb-6 line-clamp-2 leading-relaxed">{{project()?.proyectoEmpresa?.descripcion}}
+      </p>
+
+      <div class="grid grid-cols-3 gap-6 mb-6">
+        <div class="text-center">
+          <p class="text-2xl font-bold text-white">{{project()?.actividadesCount}}</p>
+          <p class="text-surface-400 text-xs font-medium">Actividades</p>
+        </div>
+        <div class="text-center">
+          <p class="text-2xl font-bold text-white">{{project()?.tareasCount}}</p>
+          <p class="text-surface-400 text-xs font-medium">Tareas</p>
+        </div>
+        <div class="text-center">
+          <p class="text-2xl font-bold text-warning">{{project()?.estadoTareaCount}}</p>
+          <p class="text-surface-400 text-xs font-medium">En Proceso</p>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between text-sm">
+        <div class="flex items-center space-x-2">
+          <svg class="w-4 h-4 text-surface-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z">
+            </path>
+          </svg>
+          <span class="text-surface-400 font-medium">Vence: {{project()?.fechaFinalizacion | date}}</span>
+        </div>
+        <span class="text-accent font-semibold group-hover:text-white transition-colors duration-300">Ver
+          Actividades</span>
+      </div>
+    </div>
+    }
+    @else {
+    <div class="col-span-full">
+
+      <div
+        class="relative bg-surface-800/40 backdrop-blur-lg rounded-3xl overflow-hidden border border-surface-700/50 shadow-xl shadow-black/20 min-h-[400px] flex items-center justify-center">
+
+        <div class="absolute inset-0 opacity-30">
+          <div
+            class="absolute -top-20 -left-20 w-64 h-64 bg-primary/10 rounded-full animate-[pulse_8s_ease-in-out_infinite]">
+          </div>
+          <div
+            class="absolute -bottom-20 -right-20 w-64 h-64 bg-accent/10 rounded-full animate-[pulse_8s_ease-in-out_infinite_2s]">
+          </div>
+        </div>
+
+
+        <div class="relative z-10 p-10 text-center max-w-2xl mx-auto">
+
+          <div class="relative inline-block mb-8 animate-[float_6s_ease-in-out_infinite]">
+            <div class="absolute inset-0 bg-primary/10 rounded-2xl rotate-6 blur-md"></div>
+            <div class="absolute inset-0 bg-accent/10 rounded-2xl -rotate-6 blur-md"></div>
+            <div
+              class="relative w-20 h-20 bg-surface-700/70 border border-surface-600/50 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+              <svg class="w-10 h-10 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 01-1.125-1.125v-3.75zM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 01-1.125-1.125v-8.25zM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 01-1.125-1.125v-2.25z" />
+              </svg>
+            </div>
+          </div>
+
+
+          <h3
+            class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-surface-200 to-surface-300 mb-4">
+            Esperando proyectos
+          </h3>
+
+
+          <div class="relative overflow-hidden rounded-xl py-4">
+            <div class="absolute inset-0 bg-surface-800/30 backdrop-blur-sm border border-surface-700/30 rounded-xl">
+            </div>
+            <p class="relative text-surface-300/90 text-lg leading-relaxed max-w-lg mx-auto px-6">
+              Tu espacio de proyectos está listo. Cuando te asignen nuevos proyectos, aparecerán aquí automáticamente.
+            </p>
+          </div>
+
+
+          <div class="mt-10 w-full max-w-md h-1.5 bg-surface-800/50 rounded-full overflow-hidden mx-auto">
+            <div
+              class="h-full bg-gradient-to-r from-surface-700 via-primary/60 to-surface-700 animate-[progress_3s_linear_infinite] bg-[length:200%_100%]">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+
+
+
+
+  </div>
+</div>

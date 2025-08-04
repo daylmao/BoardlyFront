@@ -4,8 +4,11 @@
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
 
+    @if (ceoResource.hasValue()) {
+
     <!-- Stats Cards -->
-    <app-ceo-stats />
+    <app-ceo-stats [ceoStats]="ceoResource.value()" />
+    }
 
     <!-- Company Selection -->
     <app-companies />
@@ -17,13 +20,13 @@
 
         <div class="space-y-6">
           <!-- Project Card 1 -->
-          <app-ceo-projects />
+          <!-- <app-ceo-projects /> -->
         </div>
 
       </div>
 
       <!-- Sidebar -->
-      <app-ceo-sidebar />
+      <!-- <app-ceo-sidebar /> -->
     </div>
   </div>
 

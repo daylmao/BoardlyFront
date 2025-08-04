@@ -5,6 +5,8 @@ import { CompaniesComponent } from '../../../companies/components/companies/comp
 import { CeoSidebarComponent } from '../../components/ceo-sidebar/ceo-sidebar.component';
 import { CeoProjectsComponent } from '../../components/ceo-projects/ceo-projects.component';
 import { AuthService } from '../../../auth/services/AuthService.service';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { CeoService } from '../../services/Ceo.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,4 +19,14 @@ import { AuthService } from '../../../auth/services/AuthService.service';
   templateUrl: './dashboard.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class DashboardComponent {}
+export default class DashboardComponent {
+  private userId = inject(AuthService).user()?.ceoId;
+  private ceoService = inject(CeoService);
+
+  ceoResource = rxResource({
+    request: () => ({ ceoId: this.userId }),
+    loader: ({ request }) => {
+      return this.ceoService.getCountCeoDashboard(request.ceoId!);
+    },
+  });
+}

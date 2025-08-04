@@ -8,6 +8,7 @@ import {
 } from '../interfaces/RespuestaEmpresas.interface';
 import { CreateCompanyRequest } from '../interfaces/CreateCompanyRequest.interface';
 import { UpdateCompany } from '../interfaces/UpdateCompany.interface';
+import { RespuestaEmpresasPaginadas } from '../../employee-dashboard/interfaces/CompanyEmployeeResponse.interface';
 
 @Injectable({ providedIn: 'root' })
 export class CompanyService {
@@ -24,7 +25,21 @@ export class CompanyService {
       request
     );
   }
-
+  getCompaniesByEmployeeId(
+    employeeId: string,
+    numeroPagina: number,
+    tamanoPagina: number
+  ): Observable<RespuestaEmpresasPaginadas> {
+    return this.http.get<RespuestaEmpresasPaginadas>(
+      `${this.baseUrl}/companies/employee/${employeeId}/pagination`,
+      {
+        params: {
+          numeroPagina: numeroPagina.toString(),
+          tamanoPagina: tamanoPagina.toString(),
+        },
+      }
+    );
+  }
   deleteCompany(companyId: string): Observable<string> {
     return this.http.delete<string>(`${this.baseUrl}/companies/${companyId}`);
   }

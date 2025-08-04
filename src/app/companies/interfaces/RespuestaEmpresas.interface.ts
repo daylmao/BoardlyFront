@@ -12,4 +12,8 @@ export interface Empresa {
   descripcion: string;
   fechaCreacion: string;
   estado: string;
+  empresaConteo: {
+    totalEmpleados: number;
+    totalProyectos: number;
+  };
 }

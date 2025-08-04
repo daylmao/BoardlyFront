@@ -7,6 +7,8 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../auth/services/AuthService.service';
+import { UserRole } from '../../enums/UserRole.enum';
 
 @Component({
   selector: 'app-filter-card',
@@ -16,6 +18,8 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 })
 export class FilterComponent {
   private location = inject(Location);
+  private auth = inject(AuthService);
+  rol = this.auth.hasRole([UserRole.Ceo, UserRole.Encargado]);
 
   title = input.required<string>();
   buttonName = input.required<string>();

@@ -23,15 +23,15 @@ export class CompaniesComponent {
   private companyService = inject(CompanyService);
   private authService = inject(AuthService);
 
-  paginaActual = signal(1);
-  totalElementos = signal(0);
+  actualPage = signal(1);
+  totalElements = signal(0);
 
-  totalPaginas = computed(() => this.cargarEmpresas.value()?.totalPaginas ?? 0);
+  totalPages = computed(() => this.companies.value()?.totalPaginas ?? 0);
 
-  cargarEmpresas = rxResource({
+  companies = rxResource({
     request: () => ({
       ceoId: this.authService.user()?.ceoId,
-      numeroPagina: this.paginaActual(),
+      numeroPagina: this.actualPage(),
       tamanoPagina: 3,
     }),
     loader: ({ request }) => {
@@ -43,15 +43,15 @@ export class CompaniesComponent {
     },
   });
 
-  paginaAnterior() {
-    if (this.paginaActual() > 1) {
-      this.paginaActual.update((n) => n - 1);
+  previousPage() {
+    if (this.actualPage() > 1) {
+      this.actualPage.update((n) => n - 1);
     }
   }
 
-  paginaSiguiente() {
-    if (this.paginaActual() < this.totalPaginas()) {
-      this.paginaActual.update((n) => n + 1);
+  nextPage() {
+    if (this.actualPage() < this.totalPages()) {
+      this.actualPage.update((n) => n + 1);
     }
   }
 }

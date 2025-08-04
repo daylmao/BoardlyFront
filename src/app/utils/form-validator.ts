@@ -7,8 +7,9 @@ export class FormValidators {
   }
 
   static emailPattern = `^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$`;
-  static namePattern = "^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ'][a-zA-ZáéíóúÁÉÍÓÚüÜñÑ']*$";
+  static namePattern = "^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ'][a-zA-ZáéíóúÁÉÍÓÚüÜñÑ' ]*$";
   static usernamePattern = '^[a-zA-Z][a-zA-Z0-9_!.-]*$';
+  static rolPattern = /^[A-Z][a-záéíóúüñ]*$/;
 
   static passwordComplexity(control: AbstractControl) {
     const value = control.value ?? '';
@@ -51,6 +52,19 @@ export class FormValidators {
     };
   }
 
+  static firstLetterUppercase(
+    control: AbstractControl
+  ): ValidationErrors | null {
+    const value = control.value ?? '';
+    if (!value) return null;
+
+    if (!FormValidators.rolPattern.test(value)) {
+      return { firstLetterNotOnlyUppercase: true };
+    }
+
+    return null;
+  }
+
   static getTextError(errors: ValidationErrors): string | null {
     for (const key of Object.keys(errors)) {
       switch (key) {
@@ -61,7 +75,6 @@ export class FormValidators {
           if (errors['pattern'].requiredPattern === this.emailPattern) {
             return 'Email no válido';
           }
-
           return 'Formato incorrecto';
 
         case 'missingUppercase':
@@ -76,13 +89,20 @@ export class FormValidators {
         case 'minlength':
           return `Mín. ${errors['minlength'].requiredLength} caracteres`;
 
+        case 'maxlength':
+          return `Máx. ${errors['maxlength'].requiredLength} caracteres`;
+
         case 'passwordsNotMatch':
           return 'Las contraseñas no coinciden';
 
         case 'invalidStart':
           return 'Debe iniciar con una letra';
+
         case 'invalidChars':
           return 'Este caracter no es valido';
+
+        case 'firstLetterNotOnlyUppercase':
+          return 'Solo la primera letra debe ser mayúscula';
       }
     }
     return null;

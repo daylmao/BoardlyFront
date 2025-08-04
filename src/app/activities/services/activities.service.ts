@@ -32,6 +32,9 @@ export class ActivitiesService {
       request
     );
   }
+  getActivities(id: string): Observable<CreateActivity> {
+    return this.http.get<CreateActivity>(`${this.baseUrl}/activities/${id}`);
+  }
 
   deleteActivity(activityId: string): Observable<string> {
     return this.http.delete<string>(`${this.baseUrl}/activities/${activityId}`);

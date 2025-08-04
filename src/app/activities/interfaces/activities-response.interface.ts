@@ -4,6 +4,12 @@ export interface Activities {
   nombre: string;
   prioridad: string;
   descripcion: string;
+
+  actividadConteo: {
+    totalTareas: number;
+    totalTareasProceso: number;
+    totalTareasFinalizadas: number;
+  };
   estado: string;
   fechaInicio: string;
   fechaFin: string;

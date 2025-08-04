@@ -9,7 +9,7 @@ import { ActivitiesService } from '../../services/activities.service';
 import { toast } from 'ngx-sonner';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormValidators } from '../../../utils/form-validator';
-import { JsonPipe } from '@angular/common';
+import { JsonPipe, Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-activities',
@@ -22,6 +22,7 @@ export default class CreateActivitiesComponent {
   private activitiesService = inject(ActivitiesService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private location = inject(Location);
   validators = FormValidators;
   projectId: string | null = null;
 
@@ -33,7 +34,7 @@ export default class CreateActivitiesComponent {
     estado: [0, Validators.min(0)],
     fechaInicio: [null, Validators.required],
     fechaFin: [null, Validators.required],
-    orden: [0, Validators.min(0)],
+    orden: [0, [Validators.min(0)]],
   });
 
   ngOnInit() {
@@ -54,5 +55,8 @@ export default class CreateActivitiesComponent {
       toast.success('Actividad creada exitosamente!');
       this.router.navigate(['../../'], { relativeTo: this.route });
     });
+  }
+  goBack() {
+    this.location.back();
   }
 }

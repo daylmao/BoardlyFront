@@ -1,0 +1,210 @@
+<body class="bg-gradient-to-br from-surface-950 via-surface-900 to-surface-950 min-h-screen font-sans antialiased">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+
+    <div class="mb-6">
+      <button (click)="goBack()"
+        class="flex items-center gap-2 text-surface-400 hover:text-white transition-colors duration-200">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        <span class="text-sm font-medium">Volver al proyecto</span>
+      </button>
+    </div>
+
+    <!-- Sección de empleados disponibles (aparece solo una vez) -->
+    @if (employeeCompaniesResource.hasValue()) {
+    <div
+      class="bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 rounded-3xl overflow-hidden shadow-xl shadow-black/20 ring-1 ring-white/5 mb-8">
+      <div class="p-6 border-b border-surface-800/50 bg-surface-800/30">
+        <div class="flex flex-col sm:flex-row justify-between gap-4">
+          <div>
+            <h2 class="text-white text-xl font-semibold">Empleados disponibles</h2>
+            <p class="text-surface-400 text-sm mt-1">Selecciona empleados para agregar al proyecto</p>
+          </div>
+          <div class="relative max-w-xs w-full">
+            <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 text-surface-400 w-5 h-5" fill="none"
+              stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input type="text" placeholder="Buscar empleados..."
+              class="w-full pl-12 pr-4 py-2 bg-surface-800/50 border border-surface-700/50 text-white rounded-xl placeholder-surface-500 focus:outline-none focus:ring-2 focus:ring-primary transition-all duration-300">
+          </div>
+        </div>
+      </div>
+
+      <div class="divide-y divide-surface-800/50">
+        <div class="hidden sm:grid grid-cols-12 gap-4 p-6 border-b border-surface-800/50 bg-surface-800/30">
+          <div class="col-span-8">
+            <h3 class="text-surface-300 text-sm font-semibold">Empleado</h3>
+          </div>
+          <div class="col-span-4 text-right">
+            <h3 class="text-surface-300 text-sm font-semibold">Acción</h3>
+          </div>
+        </div>
+
+        @for (employee of employeeCompaniesResource.value()?.elementos; track employee.empleadoId) {
+        <div class="p-6 hover:bg-surface-800/30 transition-colors duration-200">
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+            <div class="col-span-8 flex items-center gap-4">
+              <div class="w-10 h-10 rounded-xl overflow-hidden bg-surface-800 border border-surface-700/50">
+                <img [src]="employee.fotoPerfil" [alt]="employee.nombreCompleto" class="w-full h-full object-cover">
+              </div>
+              <div>
+                <p class="text-white font-medium">{{employee.nombreCompleto}}</p>
+              </div>
+            </div>
+            <div class="col-span-4 flex justify-end">
+              <form [formGroup]="assignForm" (ngSubmit)="onAssign(employee.empleadoId)" class="flex items-center gap-2">
+                <select formControlName="rolProyectoId"
+                  class="bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 appearance-none">
+                  <option value="" disabled selected>Seleccionar rol</option>
+                  @for (rol of rolesProjectResource.value()?.elementos; track rol.rolProyectoId) {
+                  <option [value]="rol.rolProyectoId">{{ rol.nombre }}</option>
+                  }
+                </select>
+                <button type="submit" class="px-3 py-1.5 bg-primary/10 hover:bg-primary/20 border border-primary/20 text-primary rounded-lg
+                  text-sm font-medium transition-colors duration-200 flex items-center gap-1.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                  </svg>
+                  Asignar
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+
+      <app-pagination [totalItems]="employeeCompaniesResource.value()?.totalElementos ?? 0" [itemsPerPage]="10"
+        [currentPage]="currentPageCompany()" (pageChange)="handlePageChangeCompany($event)"></app-pagination>
+    </div>
+    }
+
+    <div
+      class="bg-surface-900/60 backdrop-blur-xl border border-surface-800/50 rounded-3xl overflow-hidden shadow-xl shadow-black/20 ring-1 ring-white/5">
+      <div class="hidden sm:grid grid-cols-12 gap-4 p-6 border-b border-surface-800/50 bg-surface-800/30">
+        <div class="col-span-5">
+          <h3 class="text-surface-300 text-sm font-semibold">Miembro</h3>
+        </div>
+        <div class="col-span-4">
+          <h3 class="text-surface-300 text-sm font-semibold">Rol en el Proyecto</h3>
+        </div>
+        <div class="col-span-3 text-right">
+          <h3 class="text-surface-300 text-sm font-semibold">Acciones</h3>
+        </div>
+      </div>
+
+      @if (employeeResource.hasValue()) {
+      @for (member of employeeResource.value()!.elementos; track member.empleadoId) {
+      <div class="p-6 border-b border-surface-800/50 hover:bg-surface-800/30 transition-all duration-300">
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-4">
+
+          <div class="col-span-1 sm:col-span-5 flex items-center gap-4">
+            <div class="w-12 h-12 rounded-2xl overflow-hidden bg-surface-800 flex items-center justify-center">
+              <img [src]="member.fotoPerfil" [alt]="member.nombreCompleto" class="w-full h-full object-cover" />
+            </div>
+            <div class="min-w-0 flex-1">
+              <p class="text-white font-semibold text-lg">{{ member.nombreCompleto }}</p>
+              <p class="text-surface-500 text-xs">{{ member.posicion }}</p>
+            </div>
+          </div>
+
+          <div class="col-span-1 sm:col-span-4">
+            <form [formGroup]="updateRolForm" (ngSubmit)="updateRol(member.empleadoId)" class="mb-6">
+              <div class="relative flex items-center gap-2">
+                <select formControlName="rolProyectoId"
+                  class="flex-1 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 transition-all duration-300 appearance-none pr-10">
+                  <option value="" disabled selected>Seleccionar rol</option>
+                  @for (rol of rolesProjectResource.value()?.elementos; track rol.rolProyectoId) {
+                  <option [value]="rol.rolProyectoId">{{ rol.nombre }}</option>
+                  }
+                </select>
+                <button type="submit"
+                  class="absolute right-2 p-1 text-surface-400 hover:text-accent-400 rounded-lg transition-all duration-200 hover:bg-surface-700/30"
+                  title="Actualizar rol" aria-label="Actualizar rol">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+                    </path>
+                  </svg>
+                </button>
+              </div>
+            </form>
+
+            <form [formGroup]="rolForm" (ngSubmit)="onSubmit()">
+              <div class="mt-2 space-y-4">
+                <div class="relative">
+                  <input type="text" placeholder="Rol personalizado..."
+                    (keydown.enter)="$event.preventDefault(); onSubmit()"
+                    class="w-full bg-surface-800/50 border border-surface-700/50 text-white rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 placeholder-surface-500 transition-all duration-300 pr-24"
+                    formControlName="nombre" />
+
+                  @if (validators.isValidField(rolForm, 'nombre')) {
+                  <div
+                    class="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
+                    <div class="relative flex h-2.5 w-2.5">
+                      <div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/70 opacity-80">
+                      </div>
+                      <div
+                        class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary">
+                      </div>
+                    </div>
+                    <span class="text-[11px] font-medium text-accent">
+                      {{ validators.getFieldError(rolForm, 'nombre') }}
+                    </span>
+                  </div>
+                  }
+                </div>
+
+                <div class="relative">
+                  <input type="text" placeholder="Breve descripción del rol personalizado..."
+                    (keydown.enter)="$event.preventDefault(); onSubmit()"
+                    class="w-full bg-surface-800/50 border border-surface-700/50 text-white rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary/50 placeholder-surface-500 transition-all duration-300"
+                    formControlName="descripcion" />
+
+                  @if (validators.isValidField(rolForm, 'descripcion')) {
+                  <div
+                    class="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 flex items-center gap-1.5 group bg-surface-900/80 backdrop-blur-sm px-2 py-1 rounded-full border border-surface-700 shadow-lg">
+                    <div class="relative flex h-2.5 w-2.5">
+                      <div class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent/70 opacity-80">
+                      </div>
+                      <div
+                        class="relative inline-flex rounded-full h-2.5 w-2.5 bg-gradient-to-br from-accent to-secondary">
+                      </div>
+                    </div>
+                    <span class="text-[11px] font-medium text-accent">
+                      {{ validators.getFieldError(rolForm, 'descripcion') }}
+                    </span>
+                  </div>
+                  }
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="col-span-1 sm:col-span-3 flex items-center justify-end gap-2 mt-4 sm:mt-0">
+            <button (click)="onDelete(member.empleadoId)"
+              class="p-2 text-surface-400 hover:text-danger hover:bg-surface-800/50 rounded-xl transition-all duration-300 hover:scale-105"
+              title="Remover del proyecto">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
+                </path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      }
+      } @else {
+      <div class="p-6 text-center text-surface-400">No se encontraron miembros en este proyecto</div>
+      }
+
+      <app-pagination [totalItems]="employeeResource.value()?.totalElementos ?? 0" [itemsPerPage]="10"
+        [currentPage]="currentPageProject()" (pageChange)="handlePageChangeProject($event)"></app-pagination>
+    </div>
+  </div>
+</body>

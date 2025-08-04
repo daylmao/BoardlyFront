@@ -9,6 +9,17 @@
     </div>
 
     <div class="absolute top-4 right-4 flex gap-2 z-10">
+
+      <a [routerLink]="[project().proyectoId, 'members']" (click)="$event.stopPropagation()" class="p-1.5 rounded-full bg-surface-800/70 hover:bg-purple-900/50 text-surface-400 hover:text-purple-300 transition-colors duration-200
+                    group-hover:opacity-100 opacity-0 shadow-md hover:shadow-purple-500/20
+                    flex items-center justify-center ring-1 ring-surface-700/50 hover:ring-purple-500/30"
+        title="Miembros del proyecto">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+      </a>
+
       <a [routerLink]="[project().proyectoId, 'delete']" (click)="$event.stopPropagation()" class="p-1.5 rounded-full bg-surface-800/70 hover:bg-red-900/50 text-surface-400 hover:text-red-300 transition-colors duration-200
                     group-hover:opacity-100 opacity-0 shadow-md hover:shadow-red-500/20
                     flex items-center justify-center ring-1 ring-surface-700/50 hover:ring-red-500/30"
@@ -52,7 +63,6 @@
           </div>
         </div>
 
-
         <div
           class="bg-surface-800/40 rounded-xl p-4 border border-surface-800/50 group-hover:border-surface-700/60 transition-colors mb-4">
           <div class="flex items-center gap-2 mb-2">
@@ -69,11 +79,7 @@
 
         <div class="flex flex-wrap items-center gap-6 text-sm">
           <div class="flex items-center space-x-2">
-            <svg class="w-4 h-4 text-surface-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-            </svg>
-            <span class="text-surface-300 font-medium">{{project().estado || project().nombre}} (Encargado)</span>
+
           </div>
           <div class="flex items-center space-x-2">
             <svg class="w-4 h-4 text-surface-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -89,31 +95,21 @@
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-6">
       <div class="text-center">
         <p class="text-surface-400 text-xs font-medium">Actividades</p>
-        <p class="text-2xl font-bold text-white">{{project().estado || '0'}}</p>
+        <p class="text-2xl font-bold text-white">{{project().proyectoConteo.conteoActividades}}</p>
       </div>
       <div class="text-center">
         <p class="text-surface-400 text-xs font-medium">Tareas</p>
-        <p class="text-2xl font-bold text-white">{{project().estado || '0'}}</p>
+        <p class="text-2xl font-bold text-white">{{project().proyectoConteo.conteoTareas}}</p>
       </div>
       <div class="text-center">
         <p class="text-surface-400 text-xs font-medium">Completadas</p>
-        <p class="text-2xl font-bold text-accent">{{project().estado || '0'}}</p>
+        <p class="text-2xl font-bold text-accent">{{project().proyectoConteo.conteoTareasCompletadas}}</p>
       </div>
       <div class="text-center">
         <p class="text-surface-400 text-xs font-medium">Pendientes</p>
-        <p class="text-2xl font-bold text-warning">{{project().estado || '0'}}</p>
+        <p class="text-2xl font-bold text-warning">{{project().proyectoConteo.conteoTareasPendientes || '0'}}</p>
       </div>
     </div>
 
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between space-y-3 sm:space-y-0">
-      <div class="flex items-center space-x-2">
-        <svg class="w-4 h-4 text-surface-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 715 0z">
-          </path>
-        </svg>
-        <span class="text-surface-300 text-sm font-medium">{{project().estado || '0'}} miembros</span>
-      </div>
-    </div>
   </a>
 </div>

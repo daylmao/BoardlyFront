@@ -13,4 +13,10 @@ export interface Project {
   fechaInicio: string;
   fechaFin: string;
   estado: number;
+  proyectoConteo: {
+    conteoActividades: number;
+    conteoTareas: number;
+    conteoTareasCompletadas: number;
+    conteoTareasPendientes: number;
+  };
 }

@@ -7,6 +7,11 @@ import {
   Project,
   ProjectResponse,
 } from '../interfaces/project-response.interface';
+import {
+  rolInfo,
+  rolProjectResponse,
+} from '../interfaces/rol-projectResponse.interface';
+import { createRolProject } from '../interfaces/createRolProject.interface';
 
 @Injectable({ providedIn: 'root' })
 export class ProjectService {
@@ -26,6 +31,29 @@ export class ProjectService {
           tamanoPagina: tamanoPagina.toString(),
         },
       }
+    );
+  }
+
+  getProjectRoles(
+    projectId: string,
+    numeroPagina: number,
+    tamanoPagina: number
+  ): Observable<rolProjectResponse> {
+    return this.http.get<rolProjectResponse>(
+      `${this.baseUrl}/roles-projects/pagination/${projectId}`,
+      {
+        params: {
+          numeroPagina: numeroPagina.toString(),
+          tamanoPagina: tamanoPagina.toString(),
+        },
+      }
+    );
+  }
+
+  createRolProject(request: createRolProject): Observable<createRolProject> {
+    return this.http.post<createRolProject>(
+      `${this.baseUrl}/roles-projects`,
+      request
     );
   }
 

@@ -23,6 +23,12 @@ export const projectsRoutes: Routes = [
       },
 
       {
+        path: ':id/members',
+        loadComponent: () =>
+          import('./pages/project-members/project-members.component'),
+      },
+
+      {
         path: ':id/update',
         loadComponent: () =>
           import('./pages/update-project/update-project.component'),

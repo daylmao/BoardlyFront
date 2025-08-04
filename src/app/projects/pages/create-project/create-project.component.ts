@@ -16,6 +16,7 @@ import { EmployeeService } from '../../../employee-dashboard/services/employee.s
 import { EmployeeResponse } from '../../../employee-dashboard/interfaces/EmployeeResponse.interface';
 import { FormValidators } from '../../../utils/form-validator';
 import { toast } from 'ngx-sonner';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-project',
@@ -29,6 +30,8 @@ export default class CreateProjectComponent {
   private route = inject(ActivatedRoute);
   private employeeService = inject(EmployeeService);
   private router = inject(Router);
+  private location = inject(Location);
+
   validators = FormValidators;
 
   empleados = signal<EmployeeResponse[]>([]);
@@ -53,7 +56,9 @@ export default class CreateProjectComponent {
         });
     }
   }
-
+  goBack() {
+    this.location.back();
+  }
   ngOnInit() {
     this.companyId = this.route.parent?.snapshot.paramMap.get('companyId')!;
     this.projectForm.get('empresaId')?.setValue(this.companyId);

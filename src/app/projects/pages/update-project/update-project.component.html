@@ -120,8 +120,8 @@
 
         <div
           class="flex flex-col sm:flex-row justify-between pt-8 border-t border-surface-800/50 space-y-4 sm:space-y-0">
-          <button (click)="goBack()"
-            class="group bg-surface-800/50 backdrop-blur-sm text-surface-300 border border-surface-700/50 py-3.5 px-8 rounded-xl font-medium hover:bg-surface-700/50 hover:text-white transition-all duration-300 text-center hover:scale-[1.02]">
+          <a (click)="goBack()"
+            class="cursor-pointer group bg-surface-800/50 backdrop-blur-sm text-surface-300 border border-surface-700/50 py-3.5 px-8 rounded-xl font-medium hover:bg-surface-700/50 hover:text-white transition-all duration-300 text-center hover:scale-[1.02]">
             <span class="flex items-center justify-center space-x-2">
               <svg class="w-4 h-4 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor"
                 viewBox="0 0 24 24">
@@ -129,7 +129,7 @@
               </svg>
               <span>Cancelar</span>
             </span>
-          </button>
+          </a>
           <button type="submit"
             class="group bg-gradient-to-r from-primary via-accent to-secondary text-white py-3.5 px-10 rounded-xl font-semibold hover:shadow-xl hover:shadow-primary/25 transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-0.5">
             <span class="flex items-center justify-center space-x-2">

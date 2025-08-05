@@ -18,7 +18,7 @@ export default class DeleteProjectComponent {
   projectId = this.route.snapshot.params['id'];
 
   onDelete() {
-    this.projectService.deleteActivity(this.projectId).subscribe(() => {
+    this.projectService.deleteProject(this.projectId).subscribe(() => {
       toast.success('Proyecto eliminado exitosamente');
       this.router.navigate(['../../'], { relativeTo: this.route });
     });

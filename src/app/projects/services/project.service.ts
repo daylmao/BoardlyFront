@@ -61,8 +61,12 @@ export class ProjectService {
     return this.http.post<Project>(`${this.baseUrl}/projects`, request);
   }
 
-  deleteActivity(projectId: string): Observable<string> {
+  deleteProject(projectId: string): Observable<string> {
     return this.http.delete<string>(`${this.baseUrl}/projects/${projectId}`);
+  }
+
+  getProjectById(projectId: string): Observable<Partial<Project>> {
+    return this.http.get<Project>(`${this.baseUrl}/projects/${projectId}`);
   }
 
   updateProject(

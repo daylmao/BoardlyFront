@@ -11,10 +11,11 @@ import { FormValidators } from '../../../utils/form-validator';
 import { Location } from '@angular/common';
 import { toast } from 'ngx-sonner';
 import { ProjectService } from '../../services/project.service';
+import { rxResource } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-update-project',
-  imports: [RouterLink, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './update-project.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -31,6 +32,13 @@ export default class UpdateProjectComponent {
     nombre: ['', [Validators.required]],
     descripcion: ['', [Validators.required]],
   });
+
+  private _loadData = this.projectService
+    .getProjectById(this.projectId)
+    .subscribe((company) => {
+      if (!company) return;
+      this.updateProjectForm.patchValue(company);
+    });
 
   goBack() {
     this.location.back();

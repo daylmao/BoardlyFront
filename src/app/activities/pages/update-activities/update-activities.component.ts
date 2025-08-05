@@ -10,6 +10,8 @@ import {
 } from '@angular/forms';
 import { toast } from 'ngx-sonner';
 import { Location } from '@angular/common';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-update-activities',
@@ -30,9 +32,36 @@ export default class UpdateActivitiesComponent {
     nombre: ['', [Validators.required]],
     descripcion: ['', [Validators.required]],
     estado: [0, Validators.required],
-    fechaInicio: [0, Validators.required],
-    fechaFin: [0, Validators.required],
+    fechaInicio: ['', Validators.required],
+    fechaFin: ['', Validators.required],
   });
+
+  activityResource = rxResource({
+    request: () => ({
+      activityId: this.activityId,
+    }),
+    loader: ({ request }) => {
+      return this.activitiesService.getActivities(request.activityId!);
+    },
+  });
+
+  private _loadData = this.activitiesService
+    .getActivities(this.activityId)
+    .pipe(
+      map((activity) => {
+        const formatDate = (dateString?: string) =>
+          dateString ? dateString.split('T')[0] : '';
+
+        return {
+          ...activity,
+          fechaInicio: formatDate(activity.fechaInicio),
+          fechaFin: formatDate(activity.fechaFin),
+        };
+      })
+    )
+    .subscribe((activity) => {
+      this.updateActivityForm.patchValue(activity);
+    });
 
   goBack() {
     this.location.back();

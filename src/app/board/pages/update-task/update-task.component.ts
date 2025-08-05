@@ -17,10 +17,11 @@ import {
 } from '@angular/forms';
 import { toast } from 'ngx-sonner';
 import { AuthService } from '../../../auth/services/AuthService.service';
+import { Task } from '../../interfaces/task.interface';
 
 @Component({
   selector: 'app-update-task',
-  imports: [DatePipe, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './update-task.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -33,7 +34,7 @@ export default class UpdateTaskComponent {
   private employeeService = inject(EmployeeService);
   private fb = inject(FormBuilder);
 
-  taskId = this.route.snapshot.paramMap.get('id');
+  taskId = this.route.snapshot.paramMap.get('id')!;
   projectId =
     this.route.parent?.parent?.parent?.snapshot.paramMap.get('projectId');
 
@@ -59,11 +60,24 @@ export default class UpdateTaskComponent {
   selectedEmployees = new Set<string>();
 
   updateTaskForm: FormGroup = this.fb.group({
-    UsuarioId: [''],
-    EmpleadoIds: [[]],
-    Descripcion: ['', [Validators.required]],
-    Titulo: ['', Validators.required],
+    usuarioId: [''],
+    empleadoIds: [[]],
+    descripcion: ['', [Validators.required]],
+    titulo: ['', Validators.required],
   });
+
+  private _loadData = this.boardService
+    .getTaskById(this.taskId)
+    .subscribe((Task) => {
+      if (!Task) return;
+      this.updateTaskForm.patchValue(Task);
+
+      if (Task.empleadoTareaDto && Array.isArray(Task.empleadoTareaDto)) {
+        for (const empleado of Task.empleadoTareaDto) {
+          this.selectedEmployees.add(empleado.empleadoId);
+        }
+      }
+    });
 
   toggleEmployeeSelection(employeeId: string) {
     if (this.selectedEmployees.has(employeeId)) {
@@ -92,19 +106,17 @@ export default class UpdateTaskComponent {
     if (this.updateTaskForm.invalid)
       return this.updateTaskForm.markAllAsTouched();
 
-    this.updateTaskForm.get('UsuarioId')?.setValue(this.userId);
+    this.updateTaskForm.get('usuarioId')?.setValue(this.userId);
 
     this.updateTaskForm
-      .get('EmpleadoIds')
+      .get('empleadoIds')
       ?.setValue(this.getSelectedEmployeeIds());
-
-    console.log(this.updateTaskForm.value);
 
     this.boardService
       .updateTaskById(this.taskId!, this.updateTaskForm.value)
       .subscribe(() => {
         toast.success('Tarea actualizada exitosamente');
-        this.router.navigate(['..'], { relativeTo: this.route });
+        this.router.navigate(['../..'], { relativeTo: this.route });
       });
   }
 }

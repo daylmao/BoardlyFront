@@ -101,7 +101,7 @@
             <label for="activity-start-date" class="block text-sm font-semibold text-surface-200">
               Fecha de Inicio
             </label>
-            <input id="activity-start-date" name="activity-start-date" type="date"
+            <input id="activity-start-date" name="activity-start-date" type="date" formControlName="fechaInicio"
               class="w-full px-4 py-3.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-warning focus:border-warning/50 transition-all duration-300 hover:border-surface-600">
             @if (validators.isValidField(updateActivityForm, "fechaInicio")) {
             <div
@@ -152,8 +152,8 @@
 
         <div
           class="flex flex-col sm:flex-row justify-between pt-8 border-t border-surface-800/50 space-y-4 sm:space-y-0">
-          <button (click)="goBack()"
-            class="group bg-surface-800/50 backdrop-blur-sm text-surface-300 border border-surface-700/50 py-3.5 px-8 rounded-xl font-medium hover:bg-surface-700/50 hover:text-white transition-all duration-300 text-center hover:scale-[1.02]">
+          <a (click)="goBack()"
+            class="cursor-pointer group bg-surface-800/50 backdrop-blur-sm text-surface-300 border border-surface-700/50 py-3.5 px-8 rounded-xl font-medium hover:bg-surface-700/50 hover:text-white transition-all duration-300 text-center hover:scale-[1.02]">
             <span class="flex items-center justify-center space-x-2">
               <svg class="w-4 h-4 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor"
                 viewBox="0 0 24 24">
@@ -161,7 +161,7 @@
               </svg>
               <span>Cancelar</span>
             </span>
-          </button>
+          </a>
           <button type="submit"
             class="group bg-gradient-to-r from-warning via-accent to-secondary text-white py-3.5 px-10 rounded-xl font-semibold hover:shadow-xl hover:shadow-warning/25 transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-0.5">
             <span class="flex items-center justify-center space-x-2">

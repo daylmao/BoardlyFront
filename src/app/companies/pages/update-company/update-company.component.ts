@@ -9,6 +9,8 @@ import {
 } from '@angular/forms';
 import { toast } from 'ngx-sonner';
 import { FormValidators } from '../../../utils/form-validator';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { signal, effect } from '@angular/core';
 
 @Component({
   selector: 'app-edit-company',
@@ -29,6 +31,22 @@ export default class EditCompanyComponent {
     descripcion: ['', [Validators.required]],
     estado: ['', Validators.required],
   });
+
+  companyResource = rxResource({
+    request: () => ({
+      companyId: this.companyId,
+    }),
+    loader: ({ request }) => {
+      return this.companyService.getCompanyById(request.companyId!);
+    },
+  });
+
+  private _loadData = this.companyService
+    .getCompanyById(this.companyId)
+    .subscribe((company) => {
+      if (!company) return;
+      this.updateCompanyForm.patchValue(company);
+    });
 
   onSubmit() {
     if (this.updateCompanyForm.invalid)

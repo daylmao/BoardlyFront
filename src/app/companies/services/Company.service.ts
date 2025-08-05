@@ -44,6 +44,10 @@ export class CompanyService {
     return this.http.delete<string>(`${this.baseUrl}/companies/${companyId}`);
   }
 
+  getCompanyById(companyId: string): Observable<Empresa> {
+    return this.http.get<Empresa>(`${this.baseUrl}/companies/${companyId}`);
+  }
+
   getEmpresasPaginadas(
     ceoId: string,
     numeroPagina: number,

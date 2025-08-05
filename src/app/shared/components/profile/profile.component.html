@@ -66,31 +66,52 @@
               </div>
             </div>
 
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <form [formGroup]="profileForm" (ngSubmit)="onSubmitName()">
               <div class="space-y-2">
-                <label for="nombre" class="block text-sm font-medium text-surface-300">
-                  Nombre
-                </label>
-                <input id="nombre" type="text" [value]="userDetails().nombre" placeholder="Ingresa tu nombre"
-                  class="w-full px-4 py-2.5 bg-surface-800/50 border border-surface-700/50 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 placeholder-surface-500">
+                <label for="nombre" class="block text-sm font-medium text-surface-300">Nombre</label>
+                <div class="relative">
+                  <input id="nombre" type="text" formControlName="nombre" class="w-full pr-12 px-4 py-2.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl
+                    focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300
+                    placeholder-surface-500" />
+                  <button type="submit"
+                    class="absolute right-2 top-1/2 transform -translate-y-1/2 p-1.5 text-surface-400 hover:text-primary rounded-lg transition-all duration-200 hover:bg-surface-700/30"
+                    title="Actualizar nombre">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                  </button>
+                </div>
               </div>
+            </form>
 
-              <div class="space-y-2">
-                <label for="apellido" class="block text-sm font-medium text-surface-300">
-                  Apellido
-                </label>
-                <input id="apellido" type="text" [value]="userDetails().apellido" placeholder="Ingresa tu apellido"
-                  class="w-full px-4 py-2.5 bg-surface-800/50 border border-surface-700/50 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 placeholder-surface-500">
+            <form [formGroup]="profileForm" (ngSubmit)="onSubmitLastName()">
+              <div class="space-y-2 mt-4">
+                <label for="apellido" class="block text-sm font-medium text-surface-300">Apellido</label>
+                <div class="relative">
+                  <input id="apellido" type="text" formControlName="apellido" class="w-full pr-12 px-4 py-2.5 bg-surface-800/50 backdrop-blur-sm border border-surface-700/50 text-white rounded-xl
+                    focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300
+                    placeholder-surface-500" />
+                  <button type="submit"
+                    class="absolute right-2 top-1/2 transform -translate-y-1/2 p-1.5 text-surface-400 hover:text-primary rounded-lg transition-all duration-200 hover:bg-surface-700/30"
+                    title="Actualizar apellido">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                  </button>
+                </div>
               </div>
-            </div>
+            </form>
+
 
             <div class="space-y-2">
-              <label for="email" class="block text-sm font-medium text-surface-300">
-                Correo Electrónico
+              <label for="username" class="block text-sm font-medium text-surface-300">
+                Correo
               </label>
-              <input id="email" type="email" [value]="userDetails().correo" placeholder="Ingresa tu correo electrónico"
-                class="w-full px-4 py-2.5 bg-surface-800/50 border border-surface-700/50 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-200 placeholder-surface-500">
+              <input id="username" type="text" [value]="userDetails().correo" readonly
+                class="w-full px-4 py-2.5 bg-surface-800/30 border border-surface-700/50 text-surface-400 rounded-lg cursor-not-allowed">
+              <p class="text-xs text-surface-500 mt-1">El correo no puede ser modificado</p>
             </div>
 
             <div class="space-y-2">

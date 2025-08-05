@@ -28,9 +28,6 @@ import { toast } from 'ngx-sonner';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class CreateTaskComponent {
-  onFileChange($event: Event) {
-    throw new Error('Method not implemented.');
-  }
   private location = inject(Location);
   private employeeService = inject(EmployeeService);
   private boardService = inject(BoardService);
@@ -40,6 +37,11 @@ export default class CreateTaskComponent {
   private router = inject(Router);
   validators = FormValidators;
   register = output<FormData>();
+  file: File | null = null;
+  previewUrl: string | null = null;
+  tempFile = signal<string>('');
+  selectedFile = signal<File | null>(null);
+  filePreviewUrl = signal<string | null>(null);
 
   paginaActual = signal(1);
   totalElementos = signal(0);
@@ -94,19 +96,43 @@ export default class CreateTaskComponent {
     FechaVencimiento: [null, [Validators.required]],
     FechaInicio: [null, [Validators.required]],
     ActividadId: [''],
+    Archivos: [''],
   });
 
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (!input.files?.length) return;
+
+    const file = input.files[0];
+    this.selectedFile.set(file);
+
+    if (file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = () => this.filePreviewUrl.set(reader.result as string);
+      reader.readAsDataURL(file);
+    } else {
+      this.filePreviewUrl.set(null);
+    }
+  }
+
+  isImageFile() {
+    const file = this.selectedFile();
+    return file?.type.startsWith('image/');
+  }
+
   onSubmit() {
-    if (this.createTaskForm.invalid)
+    if (this.createTaskForm.invalid) {
       return this.createTaskForm.markAllAsTouched();
+    }
 
     this.createTaskForm.get('ProyectoId')?.setValue(this.projectId);
     this.createTaskForm.get('UsuarioId')?.setValue(this.userId);
     this.createTaskForm.get('ActividadId')?.setValue(this.activityId);
-
     this.createTaskForm
       .get('EmpleadoIds')
       ?.setValue(this.getSelectedEmployeeIds());
+
+    const formData = new FormData();
 
     const formValue = {
       ...this.createTaskForm.value,
@@ -118,7 +144,27 @@ export default class CreateTaskComponent {
       ).toISOString(),
     };
 
-    this.boardService.createTask(formValue).subscribe(() => {
+    Object.entries(formValue).forEach(([key, value]) => {
+      if (value != null && key !== 'Archivos' && key !== 'Archivo') {
+        if (Array.isArray(value)) {
+          value.forEach((item) => {
+            const val =
+              typeof item === 'object' ? JSON.stringify(item) : String(item);
+            formData.append(key, val);
+          });
+        } else {
+          const val =
+            typeof value === 'object' ? JSON.stringify(value) : String(value);
+          formData.append(key, val);
+        }
+      }
+    });
+
+    if (this.selectedFile()) {
+      formData.append('Archivo', this.selectedFile() as Blob);
+    }
+
+    this.boardService.createTask(formData).subscribe(() => {
       toast.success('Tarea creada exitosamente');
       this.router.navigate(['..'], { relativeTo: this.route });
     });

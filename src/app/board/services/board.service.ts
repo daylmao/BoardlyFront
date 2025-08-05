@@ -15,8 +15,8 @@ export class BoardService {
     return this.http.delete<string>(`${this.baseUrl}/tasks/${projectId}`);
   }
 
-  createTask(request: createTask): Observable<Task> {
-    return this.http.post<Task>(`${this.baseUrl}/tasks`, request);
+  createTask(formData: FormData): Observable<Task> {
+    return this.http.post<Task>(`${this.baseUrl}/tasks`, formData);
   }
 
   getTaskById(taskId: string): Observable<TaskDetails> {

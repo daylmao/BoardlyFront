@@ -1,6 +1,7 @@
 export interface TaskDetails {
   titulo: string;
   estadoTarea: string;
+  archivos: string;
   descripcion: string;
   fechaInicio: string;
   fechaVencimiento: string;
@@ -13,10 +14,10 @@ export interface TaskDetails {
       fotoPerfil: string | null;
     };
   };
-  empleadoTareaDto: {
+  empleadoTareaDto: Array<{
     empleadoId: string;
     nombreCompleto: string;
     rol: string;
     fotoPerfil: string;
-  };
+  }>;
 }

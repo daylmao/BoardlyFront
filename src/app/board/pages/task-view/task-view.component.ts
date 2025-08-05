@@ -21,6 +21,28 @@ export default class TaskViewComponent {
     this.location.back();
   }
 
+  getFileName(fileUrl: string): string {
+    if (!fileUrl) return 'Documento';
+
+    try {
+      const url = new URL(fileUrl);
+      return url.pathname.split('/').pop() || 'Documento';
+    } catch {
+      return fileUrl.split('/').pop() || 'Documento';
+    }
+  }
+
+  isImageFile(fileUrl: string): boolean {
+    if (!fileUrl) return false;
+
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg'];
+    const lowerCaseUrl = fileUrl.toLowerCase();
+
+    return imageExtensions.some((ext) => {
+      return lowerCaseUrl.endsWith(ext) || lowerCaseUrl.includes(ext);
+    });
+  }
+
   taskResource = rxResource({
     request: () => ({ taskId: this.taskId }),
     loader: ({ request }) => {

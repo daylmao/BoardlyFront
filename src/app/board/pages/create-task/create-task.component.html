@@ -138,7 +138,7 @@
           </div>
         </div>
 
-        <!-- <div class="space-y-4">
+        <div class="space-y-4">
           <label class="block text-sm font-semibold text-surface-200">
             Archivos Adjuntos
           </label>
@@ -154,12 +154,53 @@
                 <p class="mb-2 text-sm text-surface-300 group-hover:text-white transition-colors duration-300">
                   <span class="font-semibold">Click para subir</span> o arrastra y suelta
                 </p>
-                <p class="text-xs text-surface-500">PDF, DOC, XLS, JPG, PNG (MAX. 10MB)</p>
+                <p class="text-xs text-surface-500">PDF, DOC, XLS, JPG, PNG</p>
               </div>
-              <input id="dropzone-file" type="file" class="hidden" multiple (change)="onFileChange($event)">
+              <input id="dropzone-file" type="file" class="hidden" multiple (change)="onFileSelected($event)">
             </label>
           </div>
-        </div> -->
+        </div>
+        <div class="mt-4">
+          @if (selectedFile()) {
+          @if (isImageFile()) {
+          <div
+            class="relative w-44 h-44 overflow-hidden rounded-2xl border border-surface-600/30 bg-surface-700/20 shadow-lg transition-all hover:shadow-xl group">
+            <img [src]="filePreviewUrl()"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              alt="Preview del archivo" />
+            <div
+              class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            </div>
+          </div>
+          } @else {
+          <div
+            class="flex items-center gap-3 p-4 rounded-2xl border border-surface-600/30 bg-surface-700/20 shadow-lg w-full max-w-xs transition-all hover:shadow-xl">
+
+            <div class="p-2.5 rounded-lg bg-primary-500/10 text-primary-400">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                class="text-current">
+                <path
+                  d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M10 9H9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </div>
+
+            <div class="overflow-hidden flex-1 min-w-0">
+              <span class="text-sm font-medium text-white truncate block">{{ selectedFile()?.name }}</span>
+            </div>
+          </div>
+          }
+          }
+
+        </div>
 
         <div
           class="flex flex-col sm:flex-row justify-between pt-8 border-t border-surface-800/50 space-y-4 sm:space-y-0">

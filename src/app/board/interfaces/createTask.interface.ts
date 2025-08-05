@@ -7,4 +7,5 @@ export interface createTask {
   FechaVencimiento: string;
   FechaInicio: string;
   ActividadId: string;
+  Archivos: string;
 }

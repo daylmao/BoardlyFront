@@ -53,7 +53,7 @@ export default class CreateActivitiesComponent {
 
     this.activitiesService.createActivity(formValue).subscribe(() => {
       toast.success('Actividad creada exitosamente!');
-      this.router.navigate(['../../'], { relativeTo: this.route });
+      this.router.navigate(['..'], { relativeTo: this.route });
     });
   }
   goBack() {

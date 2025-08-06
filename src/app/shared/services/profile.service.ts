@@ -33,4 +33,18 @@ export class ProfileService {
       request
     );
   }
+  changePassword(
+    userId: string,
+    request: {
+      contrasenaAntigua: string;
+      nuevaContrasena: string;
+      confirmacionDeContrsena: string;
+    }
+  ) {
+    return this.http.put(
+      `${this.baseUrl}/users/${userId}/reset-password`,
+      request,
+      { responseType: 'text' }
+    );
+  }
 }

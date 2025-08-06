@@ -9,9 +9,15 @@ import { UserDetails } from '../../../auth/interfaces/UserDetails.interface';
 import { DatePipe } from '@angular/common';
 import { AuthService } from '../../../auth/services/AuthService.service';
 import { Router } from '@angular/router';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { ProfileService } from '../../services/profile.service';
 import { toast } from 'ngx-sonner';
+import { FormValidators } from '../../../utils/form-validator';
 
 @Component({
   selector: 'app-profile',
@@ -24,6 +30,7 @@ export class ProfileComponent {
   private profileService = inject(ProfileService);
   private readonly router = inject(Router);
   private fb = inject(FormBuilder);
+  validators = FormValidators;
   id = inject(AuthService).user()!.uid;
 
   userDetails = input.required<UserDetails>();
@@ -66,6 +73,49 @@ export class ProfileComponent {
       .subscribe(() => {
         window.location.reload();
         toast.success('Apellido actualizado correctamente');
+      });
+  }
+
+  showPasswordModal = signal(false);
+
+  passwordForm: FormGroup = this.fb.group(
+    {
+      contrasenaAntigua: ['', [Validators.required]],
+      nuevaContrasena: [
+        '',
+        [
+          Validators.required,
+          Validators.required,
+          Validators.minLength(8),
+          FormValidators.passwordComplexity,
+        ],
+      ],
+      confirmacionDeContrsena: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          FormValidators.passwordComplexity,
+        ],
+      ],
+    },
+    {
+      validators: FormValidators.isFieldOneEqualFieldTwo(
+        'nuevaContrasena',
+        'confirmacionDeContrsena'
+      ),
+    }
+  );
+
+  changePassword() {
+    if (this.passwordForm.invalid) return;
+
+    this.profileService
+      .changePassword(this.id, this.passwordForm.value!)
+      .subscribe(() => {
+        toast.success('Contraseña actualizada exitosamente!');
+        this.passwordForm.reset();
+        this.showPasswordModal.set(false);
       });
   }
 }

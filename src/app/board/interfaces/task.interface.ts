@@ -3,16 +3,19 @@ export interface Task {
   proyectoId: string;
   titulo: string;
   estadoTarea: TaskStatus;
-  descripcion: string | null;
-  fechaInicio: Date;
-  fechaVencimiento: Date;
-  fechaActualizacion?: Date | null;
-  fechaCreado: Date;
+  descripcion: string;
+  fechaInicio: string | Date;
+  fechaVencimiento: string | Date;
+  fechaActualizacion: string | Date;
+  fechaCreado: string | Date;
   actividadId: string;
-  usuarioFotoPerfil: Array<{
-    fotoPerfil: string;
-    usuarioId: string;
-  }>;
+  usuarioFotoPerfil: UsuarioFotoPerfilDto[];
+  archivo?: string;
+  enRevision: boolean;
+}
+export interface UsuarioFotoPerfilDto {
+  usuarioId: string;
+  fotoPerfil: string;
 }
 
 export type TaskStatus =

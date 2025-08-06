@@ -17,7 +17,6 @@ import {
 } from '@angular/forms';
 import { toast } from 'ngx-sonner';
 import { AuthService } from '../../../auth/services/AuthService.service';
-import { Task } from '../../interfaces/task.interface';
 
 @Component({
   selector: 'app-update-task',

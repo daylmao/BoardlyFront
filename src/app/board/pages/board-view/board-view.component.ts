@@ -12,16 +12,15 @@ import {
   DragDropModule,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
-import { Task, TaskStatus } from '../../interfaces/task.interface';
 import { SignalRService } from '../../services/signalr.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { ActivitiesService } from '../../../activities/services/activities.service';
-import CreateTaskComponent from '../create-task/create-task.component';
 import { BoardService } from '../../services/board.service';
 import { toast } from 'ngx-sonner';
+import { Task, TaskStatus } from '../../interfaces/task.interface';
 
 type ColumnId = 'pendiente' | 'en-proceso' | 'en-revision' | 'finalizada';
 
@@ -31,7 +30,7 @@ type ColumnId = 'pendiente' | 'en-proceso' | 'en-revision' | 'finalizada';
   templateUrl: './board-view.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class BoardViewComponent {
+export default class BoardViewComponent implements OnDestroy {
   private signalRService = inject(SignalRService);
   private boardService = inject(BoardService);
   private route = inject(ActivatedRoute);
@@ -72,35 +71,18 @@ export default class BoardViewComponent {
       return this.activityService.getActivities(request.activityId);
     },
   });
-  showModal = signal(false);
 
   ngOnInit() {
+    this.setupSignalRConnection();
+  }
+
+  private setupSignalRConnection(): void {
     const connectionSub = this.signalRService
       .startConnection(this.activityId, 1, 100)
       .subscribe({
         next: (connected) => {
           if (connected) {
-            this.subscriptions.push(
-              this.signalRService.tareasPaginadas$.subscribe((tareas) => {
-                this.tasks.set(tareas);
-                console.log('Tareas recibidas:', tareas);
-              }),
-              this.signalRService.tareaEnPendiente$.subscribe((tareaId) => {
-                this.updateLocalTaskStatus(tareaId, 'Pendiente');
-              }),
-
-              this.signalRService.tareaEnProceso$.subscribe((tareaId) => {
-                this.updateLocalTaskStatus(tareaId, 'EnProceso');
-              }),
-
-              this.signalRService.tareaEnRevision$.subscribe((tareaId) => {
-                this.updateLocalTaskStatus(tareaId, 'EnRevision');
-              }),
-
-              this.signalRService.tareaFinalizada$.subscribe((tareaId) => {
-                this.updateLocalTaskStatus(tareaId, 'Finalizada');
-              })
-            );
+            this.setupSignalRSubscriptions();
           }
         },
         error: (err) => console.error('Error de conexión:', err),
@@ -109,24 +91,70 @@ export default class BoardViewComponent {
     this.subscriptions.push(connectionSub);
   }
 
+  private setupSignalRSubscriptions(): void {
+    this.subscriptions.push(
+      this.signalRService.tareasPaginadas$.subscribe((tareas) => {
+        this.tasks.set(tareas);
+        console.log('Tareas iniciales recibidas:', tareas);
+      }),
+
+      this.signalRService.tareaEnPendiente$.subscribe((tarea) => {
+        this.updateLocalTask(tarea);
+      }),
+
+      this.signalRService.tareaEnProceso$.subscribe((tarea) => {
+        this.updateLocalTask(tarea);
+      }),
+
+      this.signalRService.tareaEnRevision$.subscribe((tarea) => {
+        this.updateLocalTask(tarea);
+      }),
+
+      this.signalRService.tareaFinalizada$.subscribe((tarea) => {
+        this.updateLocalTask(tarea);
+      }),
+
+      this.signalRService.nuevaTarea$.subscribe((tarea) => {
+        this.addNewTask(tarea);
+      }),
+
+      this.signalRService.tareaActualizada$.subscribe((tarea) => {
+        this.updateLocalTask(tarea);
+      })
+    );
+  }
+
   private filterTasksByStatus(status: TaskStatus): Task[] {
     return this.tasks().filter((task) => task.estadoTarea === status);
   }
 
-  private updateLocalTaskStatus(tareaId: string, newStatus: TaskStatus) {
+  private updateLocalTask(updatedTask: Task): void {
     this.tasks.update((tasks) =>
       tasks.map((task) =>
-        task.tareaId === tareaId
-          ? {
-              ...task,
-              estadoTarea: newStatus,
-            }
-          : task
+        task.tareaId === updatedTask.tareaId ? updatedTask : task
       )
     );
   }
 
+  private addNewTask(newTask: Task): void {
+    this.tasks.update((tasks) => [...tasks, newTask]);
+  }
+
   drop(event: CdkDragDrop<Task[]>) {
+    const task = event.previousContainer.data[event.previousIndex];
+    const previousStatus: TaskStatus = task.estadoTarea;
+    const targetColumn = event.container.id as ColumnId;
+    const newStatus = this.STATUS_MAP[targetColumn];
+
+    if (previousStatus === 'Finalizada') {
+      return;
+    }
+
+    if (newStatus === 'Finalizada' && previousStatus !== 'EnRevision') {
+      toast.error('Solo puedes finalizar tareas que estén en revisión');
+      return;
+    }
+
     if (event.previousContainer === event.container) {
       moveItemInArray(
         event.container.data,
@@ -134,26 +162,32 @@ export default class BoardViewComponent {
         event.currentIndex
       );
     } else {
-      const task = event.previousContainer.data[event.previousIndex];
-      const newStatus =
-        this.STATUS_MAP[event.container.id as ColumnId] || 'Pendiente';
+      const updatedTask = {
+        ...task,
+        estadoTarea: newStatus,
+        enRevision: newStatus === 'Finalizada' ? true : task.enRevision,
+      };
 
-      this.updateLocalTaskStatus(task.tareaId, newStatus);
+      this.updateLocalTask(updatedTask);
 
       switch (newStatus) {
         case 'Pendiente':
-          this.signalRService.marcarEnPendiente(task.tareaId);
+          this.signalRService.marcarEnPendiente(
+            task.tareaId,
+            updatedTask.enRevision
+          );
           break;
         case 'EnProceso':
-          this.signalRService.marcarEnProceso(task.tareaId);
+          this.signalRService.marcarEnProceso(
+            task.tareaId,
+            updatedTask.enRevision
+          );
           break;
         case 'EnRevision':
-          this.signalRService.marcarEnRevision(task.tareaId);
+          this.signalRService.marcarEnRevision(task.tareaId, true);
           break;
         case 'Finalizada':
-          this.signalRService.marcarFinalizada(task.tareaId);
-          break;
-        default:
+          this.signalRService.marcarFinalizada(task.tareaId, true);
           break;
       }
     }
@@ -163,13 +197,18 @@ export default class BoardViewComponent {
     return this.REVERSE_STATUS_MAP[status];
   }
 
+  deleteTask(taskId: string) {
+    this.boardService.deleteTask(taskId).subscribe({
+      next: () => {
+        toast.success('Tarea eliminada exitosamente');
+        this.tasks.update((tasks) => tasks.filter((t) => t.tareaId !== taskId));
+      },
+      error: (err) => toast.error('Error al eliminar la tarea'),
+    });
+  }
+
   ngOnDestroy() {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
-  }
-  deleteTask(taskId: string) {
-    console.log(taskId);
-    this.boardService.deleteTask(taskId).subscribe(() => {
-      toast.success('Tarea eliminada exitosamente');
-    });
+    this.signalRService.disconnect();
   }
 }

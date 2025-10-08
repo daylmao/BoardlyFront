@@ -20,10 +20,11 @@ import { FormValidators } from '../../../utils/form-validator';
 import { AuthService } from '../../../auth/services/AuthService.service';
 import { BoardService } from '../../services/board.service';
 import { toast } from 'ngx-sonner';
+import { SpinnerComponent } from '../../../shared/components/spinner/spinner.component';
 
 @Component({
   selector: 'app-create-task',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, SpinnerComponent],
   templateUrl: './create-task.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -45,6 +46,7 @@ export default class CreateTaskComponent {
 
   paginaActual = signal(1);
   totalElementos = signal(0);
+  isLoading = signal(false);
 
   projectId =
     this.route.parent?.parent?.parent?.snapshot.paramMap.get('projectId');
@@ -125,6 +127,8 @@ export default class CreateTaskComponent {
       return this.createTaskForm.markAllAsTouched();
     }
 
+    this.isLoading.set(true);
+
     this.createTaskForm.get('ProyectoId')?.setValue(this.projectId);
     this.createTaskForm.get('UsuarioId')?.setValue(this.userId);
     this.createTaskForm.get('ActividadId')?.setValue(this.activityId);
@@ -166,6 +170,7 @@ export default class CreateTaskComponent {
 
     this.boardService.createTask(formData).subscribe(() => {
       toast.success('Tarea creada exitosamente');
+      this.isLoading.set(false);
       this.router.navigate(['..'], { relativeTo: this.route });
     });
   }

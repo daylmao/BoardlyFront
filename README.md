@@ -1,59 +1,79 @@
-# BoardlyFrontend
+# BoardlyFront
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.9.
+Frontend for the Boardly platform, a business project management application with Git-style collaborative boards and real-time features.
 
-## Development server
+## 📋 Description
 
-To start a local development server, run:
+BoardlyFront is the user interface for Boardly, a platform designed for CEOs and business teams that enables managing organizations, activities, and projects through collaborative Kanban boards with Git-style workflow.
 
-```bash
-ng serve
+### Workflow
+1. **CEO/Administrator** registers on the platform
+2. Creates a **Company** (organization)
+3. Generates a unique **invitation link** for employees to register in the company
+4. Defines **Activities** within the company
+5. Creates **Projects** associated with each activity
+6. **Assigns employees** to projects with custom roles
+7. Each project has a **Git-style board** with draggable tasks
+8. Real-time collaboration among team members
+
+## 🚀 Key Features
+
+- **JWT-based authentication and authorization system**
+- **Hierarchical management**: Companies → Activities → Projects
+- **Link-based invitation system** for employee registration in companies
+- **Employee assignment to projects** with custom roles defined by the CEO
+- **Kanban boards** with drag & drop functionality
+- **Real-time collaboration** Git-style for task management
+- **Modern and responsive interface** built with Angular 19
+- **Role management** within organizations and projects
+
+## 🏗️ Architecture
+
+The project follows an architecture based on:
+
+- **Standalone Components**: Independent components without NgModule
+- **Feature-based structure**: Each feature is self-contained with its components, services, guards, and interceptors
+- **Shared**: Reusable components and utilities across features
+- **Guards**: Route protection based on authentication and roles (within each feature)
+- **Interceptors**: Centralized JWT token and HTTP error handling (within each feature)
+- **Reactive Forms**: Robust validation and complex form handling
+
+```
+src/
+└── app/
+    ├── auth/              # Authentication, registration, and guards
+    ├── companies/         # Company management
+    ├── activities/        # Activity management
+    ├── projects/          # Project management and role assignment
+    ├── boards/            # Kanban boards
+    └── shared/            # Shared components and utilities
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## 🔑 Technical Features
 
-## Code scaffolding
+### Authentication
+- User login and registration
+- Employee registration via unique company invitation link
+- JWT token management
+- Automatic refresh token
+- Guards for route protection
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Role and team management
+- Custom role system defined by the CEO
+- Employee assignment to specific projects
+- Team member management per project
 
-```bash
-ng generate component component-name
-```
+### State management
+- Angular 19 Signals for reactivity
+- Singleton services for shared state
+- RxJS for complex data flows
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### Collaborative boards
+- Native drag & drop with CDK
+- Real-time updates
+- Task state management (To Do, In Progress, Done, etc.)
+- Task assignment to team members
 
-```bash
-ng generate --help
-```
+## 👨‍💻 Author
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+[daylmao](https://github.com/daylmao)
